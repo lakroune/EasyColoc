@@ -1,0 +1,213 @@
+<!-- ==================== SETTLEMENTS ==================== -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyColoc - Remboursements</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    fontSize: { 'xxs': '11px', 'xs': '12px', 'sm': '13px' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; font-size: 13px; background: #f8fafc; }
+        .gradient-bg { background: linear-gradient(135deg, #0f4c4c 0%, #1a6b6b 100%); }
+        .sidebar { transition: all 0.3s; }
+        @media (max-width: 1024px) { .sidebar { transform: translateX(-100%); } .sidebar.open { transform: translateX(0); } }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+    <!-- Mobile Header -->
+    <div class="lg:hidden gradient-bg px-6 py-4 flex justify-between items-center sticky top-0 z-40">
+        <div class="flex items-center gap-2">
+            <div class="w-7 h-7 bg-white rounded-lg flex items-center justify-center">
+                <i class="fas fa-home text-teal-700 text-xs"></i>
+            </div>
+            <span class="text-white font-semibold">EasyColoc</span>
+        </div>
+        <button onclick="document.getElementById('sidebar').classList.toggle('open')" class="text-white">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar fixed lg:static inset-y-0 left-0 z-50 w-60 bg-white shadow-xl lg:shadow-none overflow-y-auto border-r border-gray-100">
+            <div class="p-6 border-b border-gray-100 hidden lg:flex items-center gap-2">
+                <div class="w-8 h-8 gradient-bg rounded-lg flex items-center justify-center">
+                    <i class="fas fa-home text-white text-sm"></i>
+                </div>
+                <span class="font-semibold text-gray-800 text-sm tracking-tight">EasyColoc</span>
+            </div>
+            <nav class="p-4 space-y-1">
+                <a href="dashboard.html" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl transition text-xs">
+                    <i class="fas fa-chart-pie w-4"></i>
+                    <span>Tableau de bord</span>
+                </a>
+                <a href="colocation.html" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl transition text-xs">
+                    <i class="fas fa-house-user w-4"></i>
+                    <span>Ma Colocation</span>
+                </a>
+                <a href="expenses.html" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl transition text-xs">
+                    <i class="fas fa-receipt w-4"></i>
+                    <span>Dépenses</span>
+                </a>
+                <a href="balances.html" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl transition text-xs">
+                    <i class="fas fa-scale-balanced w-4"></i>
+                    <span>Balances</span>
+                </a>
+                <a href="settlements.html" class="flex items-center gap-3 px-4 py-3 gradient-bg text-white rounded-xl transition text-xs font-medium">
+                    <i class="fas fa-hand-holding-dollar w-4"></i>
+                    <span>Remboursements</span>
+                </a>
+            </nav>
+            <div class="p-4 border-t border-gray-100 mt-auto">
+                <a href="profile.html" class="flex items-center gap-3 px-4 py-3 text-gray-600 hover:bg-gray-50 rounded-xl transition text-xs">
+                    <i class="fas fa-user w-4"></i>
+                    <span>Mon Profil</span>
+                </a>
+                <a href="#" class="flex items-center gap-3 px-4 py-3 text-red-500 hover:bg-red-50 rounded-xl transition text-xs">
+                    <i class="fas fa-sign-out-alt w-4"></i>
+                    <span>Déconnexion</span>
+                </a>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-y-auto p-4 lg:p-6">
+            <div class="max-w-3xl mx-auto">
+                <h1 class="text-xl font-semibold text-gray-800 mb-1">Remboursements</h1>
+                <p class="text-gray-400 text-xs mb-6">Historique des paiements</p>
+
+                <!-- Pending -->
+                <div class="bg-white rounded-2xl border border-gray-100 p-5 mb-6">
+                    <h2 class="font-semibold text-gray-800 text-sm mb-4">En attente</h2>
+                    
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between p-4 border-2 border-teal-200 rounded-xl bg-teal-50">
+                            <div class="flex items-center gap-3">
+                                <div class="relative">
+                                    <img src="https://ui-avatars.com/api/?name=Marie&background=10b981&color=fff&size=40" class="w-10 h-10 rounded-full">
+                                    <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-arrow-up text-white text-xxs"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-medium text-gray-800">Marie Martin vous doit</p>
+                                    <p class="text-xxs text-gray-400">Depuis le 20 février 2024</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xl font-semibold text-teal-600">25.00 €</p>
+                                <button onclick="openModal('confirmModal')" class="mt-1 px-3 py-1.5 gradient-bg text-white text-xxs rounded-lg hover:opacity-90 transition">
+                                    <i class="fas fa-check mr-1"></i>Marquer payé
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center justify-between p-4 border-2 border-teal-200 rounded-xl bg-teal-50">
+                            <div class="flex items-center gap-3">
+                                <div class="relative">
+                                    <img src="https://ui-avatars.com/api/?name=Sophie&background=ef4444&color=fff&size=40" class="w-10 h-10 rounded-full">
+                                    <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center">
+                                        <i class="fas fa-arrow-up text-white text-xxs"></i>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-medium text-gray-800">Sophie Bernard vous doit</p>
+                                    <p class="text-xxs text-gray-400">Depuis le 18 février 2024</p>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-xl font-semibold text-teal-600">20.50 €</p>
+                                <button onclick="openModal('confirmModal')" class="mt-1 px-3 py-1.5 gradient-bg text-white text-xxs rounded-lg hover:opacity-90 transition">
+                                    <i class="fas fa-check mr-1"></i>Marquer payé
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- History -->
+                <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden">
+                    <div class="p-5 border-b border-gray-100 flex justify-between items-center">
+                        <h2 class="font-semibold text-gray-800 text-sm">Historique</h2>
+                        <select class="px-2 py-1 border rounded-lg text-xxs bg-gray-50">
+                            <option>Tous</option>
+                            <option>Reçus</option>
+                            <option>Effectués</option>
+                        </select>
+                    </div>
+                    <div class="divide-y divide-gray-100">
+                        <div class="p-4 flex items-center justify-between hover:bg-gray-50 transition">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-check text-emerald-600 text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-medium text-gray-800">Remboursement reçu de Marie</p>
+                                    <p class="text-xxs text-gray-400">15 février 2024 à 14:30</p>
+                                </div>
+                            </div>
+                            <span class="text-sm font-semibold text-emerald-600">+30.00 €</span>
+                        </div>
+                        <div class="p-4 flex items-center justify-between hover:bg-gray-50 transition">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-paper-plane text-blue-600 text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-medium text-gray-800">Remboursement envoyé à Paul</p>
+                                    <p class="text-xxs text-gray-400">10 février 2024 à 09:15</p>
+                                </div>
+                            </div>
+                            <span class="text-sm font-semibold text-red-500">-15.50 €</span>
+                        </div>
+                        <div class="p-4 flex items-center justify-between hover:bg-gray-50 transition">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
+                                    <i class="fas fa-check text-emerald-600 text-xs"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-medium text-gray-800">Remboursement reçu de Sophie</p>
+                                    <p class="text-xxs text-gray-400">5 février 2024 à 18:45</p>
+                                </div>
+                            </div>
+                            <span class="text-sm font-semibold text-emerald-600">+45.00 €</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Confirm Modal -->
+    <div id="confirmModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white rounded-2xl max-w-xs w-full p-5 text-center shadow-2xl">
+            <div class="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-3">
+                <i class="fas fa-check text-emerald-600 text-lg"></i>
+            </div>
+            <h3 class="font-semibold text-gray-800 text-sm mb-1">Confirmer ?</h3>
+            <p class="text-gray-400 text-xs mb-4">Cette action marquera la dette comme réglée.</p>
+            <div class="flex gap-2">
+                <button onclick="closeModal('confirmModal')" class="flex-1 py-2 border border-gray-200 rounded-xl text-xs hover:bg-gray-50">Annuler</button>
+                <button onclick="closeModal('confirmModal')" class="flex-1 py-2 gradient-bg text-white rounded-xl text-xs hover:opacity-90">Confirmer</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+    </script>
+</body>
+</html>

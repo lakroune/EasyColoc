@@ -1,0 +1,96 @@
+<!-- ==================== REGISTER ==================== -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyColoc - Inscription</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    fontSize: { 'xxs': '11px', 'xs': '12px', 'sm': '13px' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; font-size: 13px; }
+        .gradient-bg { background: linear-gradient(135deg, #0f4c4c 0%, #1a6b6b 50%, #0d3d3d 100%); }
+        .glass-form { background: rgba(255, 255, 255, 0.98); backdrop-filter: blur(20px); }
+        .input-field { transition: all 0.3s ease; }
+        .input-field:focus { transform: translateY(-1px); box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen flex flex-col">
+    <nav class="w-full px-8 py-5 flex justify-between items-center">
+        <div class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-white rounded-lg flex items-center justify-center">
+                <i class="fas fa-home text-teal-700 text-sm"></i>
+            </div>
+            <span class="text-white font-semibold text-lg tracking-tight">EasyColoc</span>
+        </div>
+        <a href="index.html" class="text-white/80 hover:text-white text-xs font-medium transition">Déjà inscrit ?</a>
+    </nav>
+
+    <div class="flex-1 flex items-center justify-center px-4 py-8">
+        <div class="w-full max-w-5xl grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="text-white space-y-6 hidden lg:block">
+                <h1 class="text-5xl font-semibold leading-tight tracking-tight">
+                    Rejoignez<br>
+                    <span class="text-emerald-400">EasyColoc.</span>
+                </h1>
+                <div class="w-16 h-1 bg-emerald-400 rounded-full"></div>
+                <p class="text-white/70 text-sm leading-relaxed max-w-md">
+                    Créez votre compte en quelques secondes et commencez à gérer 
+                    vos dépenses de colocation simplement.
+                </p>
+            </div>
+
+            <div class="flex justify-center lg:justify-end">
+                <div class="glass-form rounded-3xl p-8 w-full max-w-sm shadow-2xl">
+                    <div class="text-center mb-6">
+                        <h2 class="text-teal-800 font-semibold text-lg mb-1">Inscription</h2>
+                        <p class="text-gray-400 text-xs">Créez votre compte gratuitement</p>
+                    </div>
+
+                    <form class="space-y-3">
+                        <div class="grid grid-cols-2 gap-3">
+                            <input type="text" class="input-field w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-xs text-gray-700 placeholder-gray-400 focus:outline-none focus:border-teal-500 focus:bg-white" placeholder="Prénom *">
+                            <input type="text" class="input-field w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-xs text-gray-700 placeholder-gray-400 focus:outline-none focus:border-teal-500 focus:bg-white" placeholder="Nom *">
+                        </div>
+
+                        <input type="email" class="input-field w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-xs text-gray-700 placeholder-gray-400 focus:outline-none focus:border-teal-500 focus:bg-white" placeholder="Email *">
+                        
+                        <input type="tel" class="input-field w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-xs text-gray-700 placeholder-gray-400 focus:outline-none focus:border-teal-500 focus:bg-white" placeholder="Téléphone">
+
+                        <input type="password" class="input-field w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-xs text-gray-700 placeholder-gray-400 focus:outline-none focus:border-teal-500 focus:bg-white" placeholder="Mot de passe *">
+
+                        <input type="password" class="input-field w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-xs text-gray-700 placeholder-gray-400 focus:outline-none focus:border-teal-500 focus:bg-white" placeholder="Confirmer le mot de passe *">
+
+                        <label class="flex items-start gap-2 text-xxs text-gray-500 cursor-pointer mt-2">
+                            <input type="checkbox" class="w-3.5 h-3.5 mt-0.5 rounded border-gray-300 text-teal-600 focus:ring-teal-500">
+                            <span>J'accepte les <a href="#" class="text-teal-600 hover:underline">conditions d'utilisation</a> et la <a href="#" class="text-teal-600 hover:underline">politique de confidentialité</a></span>
+                        </label>
+
+                        <button type="submit" class="w-full py-3.5 bg-emerald-400 hover:bg-emerald-500 text-teal-900 text-xs font-semibold rounded-xl transition transform hover:scale-[1.02] shadow-lg shadow-emerald-400/30 mt-4">
+                            Créer mon compte
+                        </button>
+                    </form>
+
+                    <div class="mt-6 text-center">
+                        <p class="text-gray-400 text-xxs">
+                            Déjà membre ? 
+                            <a href="index.html" class="text-teal-600 hover:text-teal-700 font-semibold">Se connecter</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

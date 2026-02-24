@@ -1,0 +1,65 @@
+<!-- ==================== ADMIN DASHBOARD ==================== -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EasyColoc - Administration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    fontSize: { 'xxs': '11px', 'xs': '12px', 'sm': '13px' }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; font-size: 13px; background: #0f172a; color: white; }
+        .gradient-bg { background: linear-gradient(135deg, #0f4c4c 0%, #1a6b6b 100%); }
+        .sidebar { transition: all 0.3s; background: #1e293b; }
+        @media (max-width: 1024px) { .sidebar { transform: translateX(-100%); } .sidebar.open { transform: translateX(0); } }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Mobile Header -->
+    <div class="lg:hidden gradient-bg px-6 py-4 flex justify-between items-center sticky top-0 z-40">
+        <div class="flex items-center gap-2">
+            <div class="w-7 h-7 bg-white rounded-lg flex items-center justify-center">
+                <i class="fas fa-home text-teal-700 text-xs"></i>
+            </div>
+            <span class="text-white font-semibold">EasyColoc Admin</span>
+        </div>
+        <button onclick="document.getElementById('sidebar').classList.toggle('open')" class="text-white">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <div class="flex h-screen overflow-hidden">
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar fixed lg:static inset-y-0 left-0 z-50 w-60 overflow-y-auto border-r border-gray-700">
+            <div class="p-6 border-b border-gray-700 hidden lg:flex items-center gap-2">
+                <div class="w-8 h-8 bg-emerald-400 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-home text-teal-900 text-sm"></i>
+                </div>
+                <span class="font-semibold text-white text-sm tracking-tight">EasyColoc Admin</span>
+            </div>
+            <nav class="p-4 space-y-1">
+                <a href="admin.html" class="flex items-center gap-3 px-4 py-3 bg-emerald-400 text-teal-900 rounded-xl transition text-xs font-medium">
+                    <i class="fas fa-chart-line w-4"></i>
+                    <span>Statistiques</span>
+                </a>
+                <a href="admin-users.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 rounded-xl transition text-xs">
+                    <i class="fas fa-users w-4"></i>
+                    <span>Utilisateurs</span>
+                </a>
+                <a href="admin-colocations.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800 rounded-xl transition text-xs">
+                    <i class="fas fa-house-user w-4"></i>
+                    <span>Colocations</span>
+                </a>
+                <a href="admin-expenses.html" class="flex items-center gap-3 px-4 py-3 text-gray-400 hover:bg-gray-800
