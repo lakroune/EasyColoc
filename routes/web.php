@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ColocationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('colocations', App\Http\Controllers\ColocationController::class);
-Route::resource('expenses', App\Http\Controllers\ColocationController::class);
+Route::resource('colocations', ColocationController::class);
+Route::resource('expenses', ColocationController::class);
+Route::resource('balances', ColocationController::class);
+Route::resource('settlements', ColocationController::class);
+Route::get('admin', [ColocationController::class,'stats'])->name('admin.stats');
+Route::get('admins', [ColocationController::class,'stats'])->name('admin.users');
 require __DIR__.'/auth.php';
