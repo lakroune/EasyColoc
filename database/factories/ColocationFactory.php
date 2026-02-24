@@ -20,7 +20,6 @@ class ColocationFactory extends Factory
         return [
            'role'=>'membre',
            'user_id' => User::factory(),
-
         ];
     }
 }
