@@ -45,4 +45,24 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function isAdmin(): bool
+    {
+        return $this->is_admin;
+    }
+    public function isBanned(): bool
+    {
+        return $this->is_banned;
+    }
+    public function isMember(): bool
+    {
+        return $this->is_member;
+    }
+
+    public function colocations()
+    {
+        return $this->belongsToMany(Colocation::class);
+    }
+
+  
 }

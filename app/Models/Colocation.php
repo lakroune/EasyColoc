@@ -9,4 +9,15 @@ class Colocation extends Model
 {
     /** @use HasFactory<\Database\Factories\ColocationFactory> */
     use HasFactory;
+
+    protected $table = 'colocations';
+
+    protected $fillable = [
+        'name',
+    ];
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }
