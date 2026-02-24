@@ -12,30 +12,43 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <style>
-        body { font-family: 'Inter', sans-serif; }
-        /* كلاس إضافي للتأثير الزجاجي الموحد */
-        .glass-panel { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        body { font-family: 'Inter', sans-serif; background-color: #f8fafc; }
+        /* التأكد من أن القائمة الجانبية تعمل بشكل متجاوب */
+        .sidebar { transition: all 0.3s; }
+        @media (max-width: 1024px) { 
+            .sidebar { transform: translateX(-100%); position: fixed; } 
+            .sidebar.open { transform: translateX(0); } 
+        }
     </style>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-teal-50/30 antialiased">
-    <div class="min-h-screen">
-        @include('layouts.navigation')
+<body class="antialiased">
+    <div class="min-h-screen flex">
+        
+        @include('layouts.sidebar')
 
-        @isset($header)
-            <header class="bg-white/50 backdrop-blur-md border-b border-teal-100">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endisset
-
-        <main class="py-10">
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-                {{ $slot }}
+        <div class="flex-1 flex flex-col min-w-0">
+            
+            <div class="lg:hidden bg-white px-6 py-4 flex items-center justify-between border-b border-gray-100">
+                <span class="font-bold text-gray-800">EasyColoc</span>
+                <button onclick="document.getElementById('sidebar').classList.toggle('open')" class="text-gray-600">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
-        </main>
+
+            <main class="flex-1 overflow-y-auto p-4 lg:p-8">
+                <div class="max-w-5xl mx-auto">
+                    @isset($header)
+                        <div class="mb-6">
+                            {{ $header }}
+                        </div>
+                    @endisset
+                    
+                    {{ $slot }}
+                </div>
+            </main>
+        </div>
     </div>
 </body>
 </html>
