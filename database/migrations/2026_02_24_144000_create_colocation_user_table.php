@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('colocation_user', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('colocation_id')->constrained()->onDelete('cascade');
-            $table->foreignId('user_id')->constrained()->onDelete('cascade');
-            $table->string('role')->default('member');
-            $table->string('left_at')->nullable();
+            $table->foreignId('colocation_id')->constrained('colocations')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+
+            $table->boolean('is_owner')->default(false);
+            $table->timestamp('left_at')->nullable(); //
             $table->timestamps();
         });
     }

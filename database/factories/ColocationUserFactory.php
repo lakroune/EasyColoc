@@ -2,14 +2,14 @@
 
 namespace Database\Factories;
 
+use App\Models\Colocation;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Colocation>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ColocationUser>
  */
-class ColocationFactory extends Factory
+class ColocationUserFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -19,9 +19,9 @@ class ColocationFactory extends Factory
     public function definition(): array
     {
         return [
-            'nom_coloc' => 'Coloc ' . fake()->city(),
-            'status' => 'active',
-            'token' => Str::random(10),
+            'user_id' => User::factory(),
+            'colocation_id' => Colocation::factory(),
+            'is_owner' => false,
         ];
     }
 }
