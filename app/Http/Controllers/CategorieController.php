@@ -29,7 +29,8 @@ class CategorieController extends Controller
      */
     public function store(StoreCategorieRequest $request)
     {
-        
+        $categorie = Categorie::create($request->validated());
+        return back()->with('success', 'Catégorie ajoutée avec succès');
     }
 
     /**
@@ -53,7 +54,8 @@ class CategorieController extends Controller
      */
     public function update(UpdateCategorieRequest $request, Categorie $categorie)
     {
-        //
+        $categorie->update($request->validated());
+        return back()->with('success', 'Catégorie modifiée avec succès');
     }
 
     /**
@@ -61,6 +63,7 @@ class CategorieController extends Controller
      */
     public function destroy(Categorie $categorie)
     {
-        //
+        $categorie->delete();
+        return back()->with('success', 'Catégorie supprimée avec succès');
     }
 }
