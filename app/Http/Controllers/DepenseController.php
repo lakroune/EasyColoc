@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Depence;
-use App\Http\Requests\StoreDepenceRequest;
-use App\Http\Requests\UpdateDepenceRequest;
+use App\Models\Depense;
+use App\Http\Requests\StoreDepenseRequest;
+use App\Http\Requests\UpdateDepenseRequest;
 
-class DepenceController extends Controller
+class DepenseController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,15 +27,16 @@ class DepenceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreDepenceRequest $request)
+    public function store(StoreDepenseRequest $request)
     {
-        //
+        $depense = Depense::create($request->validated());
+        return back()->with('success', 'Depense ajoutée avec succès');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Depence $depence)
+    public function show(Depense $depense)
     {
         //
     }
@@ -43,7 +44,7 @@ class DepenceController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Depence $depence)
+    public function edit(Depense $depense)
     {
         //
     }
@@ -51,7 +52,7 @@ class DepenceController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateDepenceRequest $request, Depence $depence)
+    public function update(UpdateDepenseRequest $request, Depense $depense)
     {
         //
     }
@@ -59,7 +60,7 @@ class DepenceController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Depence $depence)
+    public function destroy(Depense $depense)
     {
         //
     }
