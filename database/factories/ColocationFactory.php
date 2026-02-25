@@ -18,8 +18,7 @@ class ColocationFactory extends Factory
     public function definition(): array
     {
         return [
-           'role'=>'membre',
-           'user_id' => User::factory(),
+            
         ];
     }
 }

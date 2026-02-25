@@ -14,17 +14,10 @@ class Depence extends Model
     protected $fillable = [
         'title',
         'montant',
-        'user_id',
-        'colocation_id',
     ];
 
-    public function colocation()
+    public function colocationUser()
     {
-        return $this->belongsTo(Colocation::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(ColocationUser::class);
     }
 }

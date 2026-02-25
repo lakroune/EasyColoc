@@ -17,7 +17,7 @@ class CatgorieFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'nom_categorie' => $this->faker->name(),
         ];
     }
 }
