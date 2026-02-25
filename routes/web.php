@@ -3,6 +3,9 @@
 use App\Http\Controllers\ColocationController;
 use App\Http\Controllers\DepenseController;
 use App\Http\Controllers\ProfileController;
+use App\Mail\InvitationMail;
+use App\Models\Colocation;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,6 +26,17 @@ Route::resource('colocations', ColocationController::class);
 Route::resource('expenses', DepenseController::class);
 Route::resource('balances', ColocationController::class);
 Route::resource('settlements', ColocationController::class);
-Route::get('admin', [ColocationController::class,'stats'])->name('admin.stats');
-Route::get('admins', [ColocationController::class,'stats'])->name('admin.users');
-require __DIR__.'/auth.php';
+Route::get('admin', [ColocationController::class, 'stats'])->name('admin.stats');
+Route::get('admins', [ColocationController::class, 'stats'])->name('admin.users');
+
+Route::get('/send-invite', function () {
+    $colocation = Colocation::find(1);
+    Mail::to('fesafi6156@bultoc.com')->send(
+        new InvitationMail(
+            $colocation
+        )
+    );
+
+    return 'Email envoyé avec succès';
+});
+require __DIR__ . '/auth.php';
