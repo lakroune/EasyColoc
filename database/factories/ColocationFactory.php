@@ -20,7 +20,7 @@ class ColocationFactory extends Factory
     {
         return [
             'nom_coloc' => 'Coloc ' . fake()->city(),
-            'status' => 'active',
+            'status' => true,
             'token' => Str::random(10),
         ];
     }

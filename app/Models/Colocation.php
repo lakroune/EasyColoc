@@ -13,11 +13,13 @@ class Colocation extends Model
     protected $table = 'colocations';
 
     protected $fillable = [
-        'name',
+        'nom_coloc',
+        'status',
+        'token',
     ];
 
-public function users()
-{
-    return $this->belongsToMany(User::class)->withPivot('role', 'left_at')->withTimestamps();
-}
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'colocation_user')->withPivot('is_owner', 'left_at')->withTimestamps();
+    }
 }

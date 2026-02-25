@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Colocation;
 use App\Http\Requests\StoreColocationRequest;
 use App\Http\Requests\UpdateColocationRequest;
+use Illuminate\Support\Str;
 
 class ColocationController extends Controller
 {
@@ -29,7 +30,11 @@ class ColocationController extends Controller
      */
     public function store(StoreColocationRequest $request)
     {
-        $colocation = Colocation::create($request->validated());
+
+        $data = $request->validated();
+        $data['status'] = true;
+        $data['token'] = Str::random(10);
+        $colocation = Colocation::create($data);
         return back()->with('success', 'Colocation ajoutée avec succès');
     }
 

@@ -18,9 +18,14 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'nom',
+        'prenom',
         'email',
         'password',
+        'solde',
+        'is_admin',
+        'is_banned',
+        'is_member',
     ];
 
     /**
@@ -43,6 +48,9 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'is_admin' => 'boolean',
+            'is_banned' => 'boolean',
+            'is_member' => 'boolean',
         ];
     }
 
@@ -62,7 +70,9 @@ class User extends Authenticatable
 
     public function colocations()
     {
-        return $this->hasMany(Colocation::class);
+        return $this->belongsToMany(Colocation::class, 'colocation_user')
+            ->withPivot('is_owner', 'left_at')
+            ->withTimestamps();
     }
-   
+
 }

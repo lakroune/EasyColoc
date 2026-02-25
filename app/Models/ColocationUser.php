@@ -12,13 +12,12 @@ class ColocationUser extends Model
     protected $fillable = [
         'colocation_id',
         'user_id',
-        'role',
+        'is_owner',
         'left_at',
     ];
 
-    public function depences()
+    public function depenses()
     {
         return $this->hasMany(Depense::class);
     }
-
 }

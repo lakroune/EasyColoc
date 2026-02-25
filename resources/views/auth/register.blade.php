@@ -9,10 +9,18 @@
             @csrf
 
             <div>
-                <input type="text" name="name" value="{{ old('name') }}" required autofocus
-                    placeholder="Nom complet *"
-                    class="input-field w-full px-4 py-3.5 bg-gray-50 border {{ $errors->has('name') ? 'border-red-500' : 'border-gray-200' }} rounded-xl text-xs text-gray-700 focus:outline-none focus:border-teal-500">
-                @error('name')
+                <input type="text" name="nom" value="{{ old('nom') }}" required autofocus placeholder="Nom  *"
+                    class="input-field w-full px-4 py-3.5 bg-gray-50 border {{ $errors->has('nom') ? 'border-red-500' : 'border-gray-200' }} rounded-xl text-xs text-gray-700 focus:outline-none focus:border-teal-500">
+                @error('nom')
+                    <p class="text-red-500 text-xxs mt-1">{{ $message }}</p>
+                @enderror
+            </div>  
+
+            <div>
+                <input type="text" name="prenom" value="{{ old('prenom') }}" required autofocus
+                    placeholder="Prenom *"
+                    class="input-field w-full px-4 py-3.5 bg-gray-50 border {{ $errors->has('prenom') ? 'border-red-500' : 'border-gray-200' }} rounded-xl text-xs text-gray-700 focus:outline-none focus:border-teal-500">
+                @error('prenom')
                     <p class="text-red-500 text-xxs mt-1">{{ $message }}</p>
                 @enderror
             </div>
