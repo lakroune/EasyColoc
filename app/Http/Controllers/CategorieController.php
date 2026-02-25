@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Catgorie;
-use App\Http\Requests\StoreCatgorieRequest;
-use App\Http\Requests\UpdateCatgorieRequest;
+use App\Models\Categorie;
+use App\Http\Requests\StoreCategorieRequest;
+use App\Http\Requests\UpdateCategorieRequest;
 
-class CatgorieController extends Controller
+class CategorieController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -27,7 +27,7 @@ class CatgorieController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreCatgorieRequest $request)
+    public function store(StoreCategorieRequest $request)
     {
         //
     }
@@ -35,7 +35,7 @@ class CatgorieController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Catgorie $catgorie)
+    public function show(Categorie $categorie)
     {
         //
     }
@@ -43,7 +43,7 @@ class CatgorieController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Catgorie $catgorie)
+    public function edit(Categorie $categorie)
     {
         //
     }
@@ -51,7 +51,7 @@ class CatgorieController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCatgorieRequest $request, Catgorie $catgorie)
+    public function update(UpdateCategorieRequest $request, Categorie $categorie)
     {
         //
     }
@@ -59,7 +59,7 @@ class CatgorieController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Catgorie $catgorie)
+    public function destroy(Categorie $categorie)
     {
         //
     }
