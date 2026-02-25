@@ -29,7 +29,8 @@ class ColocationController extends Controller
      */
     public function store(StoreColocationRequest $request)
     {
-        //
+        $colocation = Colocation::create($request->validated());
+        return back()->with('success', 'Colocation ajoutée avec succès');
     }
 
     /**
@@ -61,6 +62,7 @@ class ColocationController extends Controller
      */
     public function destroy(Colocation $colocation)
     {
-        //
+        $colocation->update(['status' => false]);
+        return back()->with('success', 'Colocation annulée avec succès');
     }
 }

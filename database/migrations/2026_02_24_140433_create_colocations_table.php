@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('colocations', function (Blueprint $table) {
             $table->id();
             $table->string('nom_coloc');
-            $table->string('status');
+            $table->boolean('status')->default(true);
             $table->string('token');
             $table->timestamps();
         });
