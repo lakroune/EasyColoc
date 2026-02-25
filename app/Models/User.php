@@ -64,4 +64,8 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Colocation::class)->withPivot('role', 'left_at')->withTimestamps();
     }
+    public function depences()
+    {
+        return $this->hasMany(Depence::class);
+    }
 }

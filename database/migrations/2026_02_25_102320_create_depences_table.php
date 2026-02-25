@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('depences', function (Blueprint $table) {
             $table->id();
+            $table->string('titre');
+            $table->float('montant');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('colocation_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }
