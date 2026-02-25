@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Catgorie extends Model
+class Categorie extends Model
 {
     /** @use HasFactory<\Database\Factories\CatgorieFactory> */
     use HasFactory;
@@ -18,5 +18,9 @@ class Catgorie extends Model
     public function colocation()
     {
         return $this->belongsTo(Colocation::class);
+    }
+    public function depenses()
+    {
+        return $this->hasMany(Depense::class);
     }
 }

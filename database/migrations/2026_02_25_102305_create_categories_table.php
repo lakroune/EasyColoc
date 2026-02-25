@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('depences', function (Blueprint $table) {
+        Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('titre');
-            $table->float('montant');
-            $table->foreignId('colocation_user_id')->constrained()->onDelete('cascade');
+            $table->string('nom_categorie');
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('depences');
+        Schema::dropIfExists('categories');
     }
 };

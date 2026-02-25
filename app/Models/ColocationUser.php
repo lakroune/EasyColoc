@@ -10,7 +10,7 @@ class ColocationUser extends Model
 
     public function depences()
     {
-        return $this->hasMany(Depence::class);
+        return $this->hasMany(Depense::class);
     }
-    
+
 }
