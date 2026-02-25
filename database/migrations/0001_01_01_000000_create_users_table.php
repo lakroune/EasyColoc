@@ -20,9 +20,9 @@ return new class extends Migration
             $table->string('nom');
             $table->string('prenom');
             $table->string('solde')->default('0');
-            $table->string('is_admin')->default('false');
-            $table->string('is_banned')->default('false');
-            $table->string('is_member')->default('false');
+            $table->boolean('is_admin')->default('false');
+            $table->boolean('is_banned')->default('false');
+            $table->boolean('is_member')->default('false');
             $table->timestamps();
         });
 
