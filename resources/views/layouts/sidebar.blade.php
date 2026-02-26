@@ -16,17 +16,8 @@
             <i class="fas fa-house-user w-5"></i> {{ __('Ma Colocation') }}
         </x-sidebar-link>
 
-        <x-sidebar-link :href="route('expenses.index')" :active="request()->routeIs('expenses.*')">
-            <i class="fas fa-receipt w-5"></i> {{ __('Dépenses') }}
-        </x-sidebar-link>
-
-        <x-sidebar-link :href="route('balances.index')" :active="request()->routeIs('balances.*')">
-            <i class="fas fa-scale-balanced w-5"></i> {{ __('Balances') }}
-        </x-sidebar-link>
-
-        <x-sidebar-link :href="route('settlements.index')" :active="request()->routeIs('settlements.*')">
-            <i class="fas fa-hand-holding-dollar w-5"></i> {{ __('Remboursements') }}
-        </x-sidebar-link>
+        
+        
 
         <x-sidebar-link :href="route('profile.edit')" :active="request()->routeIs('profile.*')">
             <i class="fas fa-user-circle w-5"></i> {{ __('Mon Profil') }}
