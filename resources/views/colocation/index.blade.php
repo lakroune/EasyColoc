@@ -33,10 +33,6 @@
                     <p class="text-[11px] text-gray-400 mb-4">{{ $coloc->colocationUsers->count() }} membres</p>
 
                     <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-                        <div>
-                            <p class="text-[10px] text-gray-400 uppercase">Dépenses</p>
-                            {{-- <p class="text-sm font-medium text-gray-800">{{ $coloc ->colocationUsers->depense->count() }}</p> --}}
-                        </div>
                         <div class="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center text-indigo-600">
                             <a href="{{ route('colocations.show', $coloc->id) }}"><i class="fas fa-arrow-right"></i></a>
                         </div>

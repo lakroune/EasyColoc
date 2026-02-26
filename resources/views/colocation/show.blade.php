@@ -1,161 +1,155 @@
 <x-app-layout>
-    <x-slot name="header">
-        <div class="flex justify-between items-center">
-            <div>
-                <h1 class="text-xl font-semibold text-gray-800">coloc 3</h1>
-                <p class="text-gray-400 text-xs mt-0.5">Créée le 26 février 2026</p>
-            </div>
-            <div class="flex gap-2">
-                <button onclick="openModal('inviteModal')" class="px-4 py-2 bg-[#0f4c4c] text-white rounded-xl text-xs font-medium">
-                    <i class="fas fa-user-plus mr-2"></i>Inviter
-                </button>
-                <button class="px-3 py-2 bg-gray-100 text-gray-600 rounded-xl text-xs">
-                    <i class="fas fa-cog"></i>
-                </button>
-            </div>
-        </div>
-    </x-slot>
 
-    <div class="max-w-4xl mx-auto space-y-6">
-        
-        {{-- Info Cards --}}
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="bg-white rounded-2xl p-4 border border-gray-100">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
-                        <i class="fas fa-map-marker-alt text-blue-600 text-xs"></i>
-                    </div>
-                    <div>
-                        <p class="text-[11px] text-gray-400">Adresse</p>
-                        <p class="text-xs font-medium text-gray-800">Paris, France</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-2xl p-4 border border-gray-100">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
-                        <i class="fas fa-euro-sign text-emerald-600 text-xs"></i>
-                    </div>
-                    <div>
-                        <p class="text-[11px] text-gray-400">Loyer total</p>
-                        <p class="text-xs font-medium text-gray-800">0.00 €/mois</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-2xl p-4 border border-gray-100">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 bg-purple-100 rounded-xl flex items-center justify-center">
-                        <i class="fas fa-calendar text-purple-600 text-xs"></i>
-                    </div>
-                    <div>
-                        <p class="text-[11px] text-gray-400">Prochaine échéance</p>
-                        <p class="text-xs font-medium text-gray-800">-</p>
-                    </div>
-                </div>
-            </div>
+    <div class="flex justify-between items-center m-2">
+        <div>
+            <h1 class="text-xl font-semibold text-gray-800">coloc 3</h1>
+            <p class="text-gray-400 text-xs mt-0.5">Créée le 26 février 2026</p>
         </div>
 
-        {{-- Members --}}
-        <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden">
-            <div class="p-5 border-b border-gray-100 flex justify-between items-center">
-                <h2 class="font-semibold text-gray-800 text-sm">Membres</h2>
-                <span class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-[11px] font-medium">1 actif</span>
-            </div>
-            
-            <div class="divide-y divide-gray-100">
-                {{-- Owner --}}
-                <div class="p-4 flex items-center justify-between hover:bg-gray-50">
-                    <div class="flex items-center gap-3">
-                        <img src="https://ui-avatars.com/api/?name=User+2&background=0f4c4c&color=fff&size=40" class="w-10 h-10 rounded-full">
-                        <div>
+    </div>
+
+
+    <div class="max-w-7xl mx-auto h-[calc(100vh-140px)] flex gap-6">
+
+        <div class="flex-1 flex gap-6 h-full">
+
+            <div class="flex-1 bg-white rounded-2xl border border-gray-100 flex flex-col h-full">
+                <div class="p-4 border-b border-gray-100 flex justify-between items-center">
+                    <h2 class="font-semibold text-gray-800 text-sm">Membres</h2>
+                    <span class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-[11px] font-medium">1
+                        actif</span>
+                </div>
+                <div class="flex-1 overflow-y-auto p-4 space-y-3">
+                    <div class="p-3 bg-gray-50 rounded-xl flex items-center gap-3">
+                        <img src="https://ui-avatars.com/api/?name=User+2&background=0f4c4c&color=fff&size=40"
+                            class="w-10 h-10 rounded-full">
+                        <div class="flex-1">
                             <div class="flex items-center gap-2">
                                 <p class="text-xs font-medium text-gray-800">user2</p>
-                                <span class="px-1.5 py-0.5 bg-[#0f4c4c] text-white text-[11px] rounded">Owner</span>
+                                <span class="px-1.5 py-0.5 bg-[#0f4c4c] text-white text-[10px] rounded">Owner</span>
                             </div>
                             <p class="text-[11px] text-gray-400">user2@example.com</p>
                         </div>
-                    </div>
-                    <div class="text-right">
-                        <p class="text-sm font-semibold text-gray-800">0.00 €</p>
-                        <p class="text-[11px] text-gray-400">Solde</p>
+                        <div class="text-right">
+                            <p class="text-sm font-semibold text-gray-800">0.00 €</p>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            <div class="flex-1 bg-white rounded-2xl border border-gray-100 flex flex-col h-full">
+                <div class="p-4 border-b border-gray-100 flex justify-between items-center">
+                    <h2 class="font-semibold text-gray-800 text-sm">Dépenses</h2>
+                    <button onclick="openModal('expenseModal')"
+                        class="w-7 h-7 bg-[#0f4c4c] text-white rounded-lg flex items-center justify-center text-xs">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="flex-1 overflow-y-auto p-4 space-y-3">
+                    <div class="p-3 bg-gray-50 rounded-xl">
+                        <div class="flex justify-between items-start mb-1">
+                            <div class="flex items-center gap-2">
+                                <div class="w-7 h-7 bg-emerald-100 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-shopping-cart text-emerald-600 text-[10px]"></i>
+                                </div>
+                                <div>
+                                    <p class="text-xs font-medium text-gray-800">Courses</p>
+                                    <p class="text-[10px] text-gray-400">26 Fév 2026</p>
+                                </div>
+                            </div>
+                            <p class="text-sm font-semibold text-gray-800">45.50 €</p>
+                        </div>
+                        <p class="text-[10px] text-gray-400">Payé par user2</p>
+                    </div>
+                    <div class="p-8 text-center text-gray-400 border-2 border-dashed border-gray-200 rounded-xl">
+                        <i class="fas fa-receipt text-2xl mb-2"></i>
+                        <p class="text-xs">Aucune autre dépense</p>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        {{-- Dépenses récentes --}}
-        <div class="bg-white rounded-2xl border border-gray-100 overflow-hidden">
-            <div class="p-5 border-b border-gray-100 flex justify-between items-center">
-                <h2 class="font-semibold text-gray-800 text-sm">Dernières dépenses</h2>
-                <a href="#" class="text-[11px] text-[#0f4c4c] hover:underline">Voir tout</a>
-            </div>
-            
-            <div class="p-8 text-center text-gray-400">
-                <i class="fas fa-receipt text-3xl mb-2"></i>
-                <p class="text-xs">Aucune dépense pour le moment</p>
-                <button onclick="openModal('expenseModal')" class="mt-3 px-4 py-2 bg-[#0f4c4c] text-white rounded-xl text-xs">
-                    Ajouter une dépense
-                </button>
-            </div>
-        </div>
+        <div class="w-80 flex flex-col gap-6 h-full">
 
-        {{-- Danger Zone --}}
-        <div class="bg-red-50 rounded-2xl p-5 border border-red-200">
-            <h3 class="text-sm font-semibold text-red-900 mb-1">Zone de danger</h3>
-            <p class="text-[11px] text-red-700 mb-3">Ces actions sont irréversibles.</p>
-            <div class="flex gap-2">
-                <button class="px-4 py-2 bg-white text-red-600 border border-red-300 rounded-xl text-xs">
-                    Quitter
-                </button>
-                <button class="px-4 py-2 bg-red-600 text-white rounded-xl text-xs">
-                    Annuler la colocation
+            <div class="bg-white rounded-2xl border border-gray-100 p-5">
+
+                <h3 class="font-semibold text-gray-800 text-sm mb-1">Inviter un membre</h3>
+                <p class="text-[11px] text-gray-400 mb-4">Ajoutez quelqu'un à votre colocation</p>
+                <button onclick="openModal('inviteModal')"
+                    class="w-full py-2.5 bg-[#0f4c4c] text-white rounded-xl text-xs font-medium">
+                    Inviter
                 </button>
             </div>
+
+            <div class="bg-red-50 rounded-2xl p-5 border border-red-200">
+
+                <h3 class="text-sm font-semibold text-red-900 mb-1">Zone de danger</h3>
+                <p class="text-[11px] text-red-700 mb-4">Ces actions sont irréversibles.</p>
+                <div class="space-y-2">
+                    <button
+                        class="w-full py-2 bg-white text-red-600 border border-red-300 rounded-xl text-xs font-medium hover:bg-red-100 transition">
+                        Quitter
+                    </button>
+                    <button
+                        class="w-full py-2 bg-red-600 text-white rounded-xl text-xs font-medium hover:bg-red-700 transition">
+                        Annuler la colocation
+                    </button>
+                </div>
+            </div>
+
         </div>
 
     </div>
 
     {{-- Modal Inviter --}}
-    <div id="inviteModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+    <div id="inviteModal"
+        class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="font-semibold text-gray-800 text-sm">Inviter un membre</h3>
-                <button onclick="closeModal('inviteModal')" class="text-gray-400">✕</button>
+                <button onclick="closeModal('inviteModal')" class="text-gray-400 hover:text-gray-600">✕</button>
             </div>
             <form class="space-y-3">
-                <input type="email" class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs" placeholder="Email du membre *">
-                <div class="p-3 bg-blue-50 rounded-xl text-[11px] text-blue-800">
-                    <i class="fas fa-info-circle mr-1"></i>
-                    Une invitation sera envoyée par email avec un lien unique valable 7 jours.
-                </div>
-                <button type="submit" class="w-full py-3 bg-[#0f4c4c] text-white text-xs font-semibold rounded-xl">
+                <input type="email"
+                    class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-[#0f4c4c]"
+                    placeholder="Email du membre *">
+                <button type="submit"
+                    class="w-full py-3 bg-[#0f4c4c] text-white text-xs font-semibold rounded-xl hover:opacity-90 transition">
                     Envoyer
                 </button>
             </form>
         </div>
     </div>
 
-    <div id="expenseModal" class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+    <div id="expenseModal"
+        class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-2xl">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="font-semibold text-gray-800 text-sm">Nouvelle dépense</h3>
-                <button onclick="closeModal('expenseModal')" class="text-gray-400">✕</button>
+                <button onclick="closeModal('expenseModal')" class="text-gray-400 hover:text-gray-600">✕</button>
             </div>
             <form class="space-y-3">
-                <input type="text" class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs" placeholder="Titre *">
+                <input type="text"
+                    class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-[#0f4c4c]"
+                    placeholder="Titre *" required>
                 <div class="grid grid-cols-2 gap-3">
-                    <input type="number" step="0.01" class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs" placeholder="Montant *">
-                    <input type="date" class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs">
+                    <input type="number" step="0.01"
+                        class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-[#0f4c4c]"
+                        placeholder="Montant *" required>
+                    <input type="date"
+                        class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-[#0f4c4c]"
+                        required>
                 </div>
-                <select class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs">
+                <select
+                    class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-[#0f4c4c]">
                     <option>Catégorie</option>
                     <option>Alimentation</option>
                     <option>Logement</option>
                     <option>Loisirs</option>
                 </select>
-                <button type="submit" class="w-full py-3 bg-[#0f4c4c] text-white text-xs font-semibold rounded-xl">
+                <button type="submit"
+                    class="w-full py-3 bg-[#0f4c4c] text-white text-xs font-semibold rounded-xl hover:opacity-90 transition">
                     Ajouter
                 </button>
             </form>
@@ -163,7 +157,12 @@
     </div>
 
     <script>
-        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
-        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
     </script>
 </x-app-layout>
