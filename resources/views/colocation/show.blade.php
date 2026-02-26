@@ -29,7 +29,9 @@
                                 <div class="flex items-center gap-2">
                                     <p class="text-xs font-medium text-gray-800">{{ $membre->user->nom }}
                                         {{ $membre->user->prenom }}</p>
-                                    <span class="px-1.5 py-0.5 bg-[#0f4c4c] text-white text-[10px] ">Owner</span>
+                                    <span
+                                        class="px-1.5 py-0.5 {{ $membre->is_owner ? 'bg-[#851313]' : 'bg-[#0f4c4c]' }}  text-white text-[10px] ">{{ $membre->is_owner ? 'owner' : 'membre' }}
+                                    </span>
                                 </div>
                                 <p class="text-[11px] text-gray-400">{{ $membre->user->email }}</p>
                             </div>
@@ -202,7 +204,7 @@
                     class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 text-xs focus:outline-none focus:border-[#0f4c4c]">
                     <option value="">Sélectionner une catégorie</option>
                     {{-- @foreach ($categories as $category) --}}
-                        {{-- <option value="{{ $category->id }}">{{ $category->nom }}</option> --}}
+                    {{-- <option value="{{ $category->id }}">{{ $category->nom }}</option> --}}
                     {{-- @endforeach --}}
                 </select>
                 <button type="submit"

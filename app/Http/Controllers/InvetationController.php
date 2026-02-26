@@ -59,8 +59,11 @@ class InvetationController extends Controller
      */
     public function accepter($token)
     {
+        if (!auth()->check())
+            abort(403);
         $invitation = Invetation::where('token', $token)->firstOrFail();
-        ColocationUser::create([
+        
+        ColocationUser::updateOrCreate([
             'colocation_id' => $invitation->colocation_id,
             'user_id' => auth()->id(),
             'is_owner' => false
