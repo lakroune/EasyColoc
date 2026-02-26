@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
             $table->string('nom_categorie');
+            $table->foreignId('colocation_id')->constrained('colocations')->onDelete('cascade');
             $table->timestamps();
         });
     }

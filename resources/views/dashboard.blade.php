@@ -7,7 +7,7 @@
     <div class="space-y-6">
         
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
-            <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+            <div class="bg-white rounded-2xl p-5 border border-gray-100 ">
                 <div class="flex items-center justify-between mb-3">
                     <div class="w-10 h-10 bg-emerald-100 rounded-xl flex items-center justify-center">
                         <i class="fas fa-wallet text-emerald-600 text-xs"></i>
@@ -16,7 +16,7 @@
                 </div>
                 <p class="text-lg font-semibold text-gray-800">+45.50 €</p>
             </div>
-            <div class="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm">
+            <div class="bg-white rounded-2xl p-5 border border-gray-100 ">
                 <div class="flex items-center justify-between mb-3">
                     <div class="w-10 h-10 bg-blue-100 rounded-xl flex items-center justify-center">
                         <i class="fas fa-receipt text-blue-600 text-xs"></i>

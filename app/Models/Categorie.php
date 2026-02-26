@@ -14,6 +14,7 @@ class Categorie extends Model
 
     protected $fillable = [
         'nom_categorie',
+        'colocation_id',
     ];
     public function colocation()
     {

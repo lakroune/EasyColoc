@@ -138,7 +138,7 @@
     {{-- Modal Inviter --}}
     <div id="inviteModal"
         class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white -2xl max-w-sm w-full p-5 shadow-2xl">
+        <div class="bg-white -2xl max-w-sm w-full p-5 -2xl">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="font-semibold text-gray-800 text-sm">Inviter un membre</h3>
                 <button onclick="closeModal('inviteModal')" class="text-gray-400 hover:text-gray-600">✕</button>
@@ -159,18 +159,19 @@
     {{-- Modal Catégorie --}}
     <div id="categoryModal"
         class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white -2xl max-w-sm w-full p-5 shadow-2xl">
+        <div class="bg-white -2xl max-w-sm w-full p-5 -2xl">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="font-semibold text-gray-800 text-sm">Nouvelle catégorie</h3>
                 <button onclick="closeModal('categoryModal')" class="text-gray-400 hover:text-gray-600">✕</button>
             </div>
             <form action="{{ route('categories.store') }}" method="POST" class="space-y-3">
                 @csrf
+                @method('POST')
                 <input type="hidden" name="colocation_id" value="{{ $colocation->id }}">
 
                 <div>
                     <label class="text-[10px] text-gray-400 uppercase font-bold mb-1 block">Nom de la catégorie</label>
-                    <input type="text" name="nom" required
+                    <input type="text" name="nom_categorie" required
                         class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 text-xs focus:outline-none focus:border-[#0f4c4c]"
                         placeholder="Ex: Transport, Factures...">
                 </div>
@@ -184,7 +185,7 @@
     {{-- model depense --}}
     <div id="expenseModal"
         class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white -2xl max-w-md w-full p-5 shadow-2xl">
+        <div class="bg-white -2xl max-w-md w-full p-5 -2xl">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="font-semibold text-gray-800 text-sm">Nouvelle dépense</h3>
                 <button onclick="closeModal('expenseModal')" class="text-gray-400 hover:text-gray-600">✕</button>

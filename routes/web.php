@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ColocationController;
 use App\Http\Controllers\DepenseController;
 use App\Http\Controllers\InvetationController;
@@ -32,7 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/expenses', [DepenseController::class, 'store'])->name('expenses.store');
     Route::delete('/expenses/{expense}', [DepenseController::class, 'destroy'])->name('expenses.destroy');
 
-    Route::post('/categories', [InvetationController::class, 'store'])->name('categories.store');
+    Route::post('/categories', [CategorieController::class, 'store'])->name('categories.store');
     
     Route::post('/invitations', [InvetationController::class, 'store'])->name('invitations.store');
     Route::get('/invitations/{token}', [InvetationController::class, 'show'])->name('invitations.show');

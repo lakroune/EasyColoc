@@ -18,22 +18,31 @@
         @method('patch')
 
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)" required autofocus autocomplete="name" />
-            <x-input-error class="mt-2" :messages="$errors->get('name')" />
+            <x-input-label for="nom" :value="__('Nom')" />
+            <x-text-input id="nom" name="nom" type="text" class="mt-1 block w-full" :value="old('nom', $user->nom)"
+                required autofocus autocomplete="nom" />
+            <x-input-error class="mt-2" :messages="$errors->get('nom')" />
+        </div>
+        <div>
+            <x-input-label for="prenom" :value="__('Prenom')" />
+            <x-text-input id="prenom" name="prenom" type="text" class="mt-1 block w-full" :value="old('prenom', $user->prenom)"
+                required autofocus autocomplete="prenom" />
+            <x-input-error class="mt-2" :messages="$errors->get('prenom')" />
         </div>
 
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />
+            <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)"
+                required autocomplete="username" />
             <x-input-error class="mt-2" :messages="$errors->get('email')" />
 
-            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && ! $user->hasVerifiedEmail())
-                <div class="mt-3 p-3 bg-teal-50/50 rounded-xl border border-teal-100">
+            @if ($user instanceof \Illuminate\Contracts\Auth\MustVerifyEmail && !$user->hasVerifiedEmail())
+                <div class="mt-3 p-3 bg-teal-50/50 -xl border border-teal-100">
                     <p class="text-sm text-teal-800">
                         {{ __('Your email address is unverified.') }}
 
-                        <button form="send-verification" class="underline text-teal-600 hover:text-teal-900 font-medium focus:outline-none">
+                        <button form="send-verification"
+                            class="underline text-teal-600 hover:text-teal-900 font-medium focus:outline-none">
                             {{ __('Click here to re-send the verification email.') }}
                         </button>
                     </p>
@@ -51,13 +60,8 @@
             <x-primary-button>{{ __('Save') }}</x-primary-button>
 
             @if (session('status') === 'profile-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-teal-600 font-medium flex items-center"
-                >
+                <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)"
+                    class="text-sm text-teal-600 font-medium flex items-center">
                     <i class="fas fa-check-circle mr-1"></i> {{ __('Saved.') }}
                 </p>
             @endif

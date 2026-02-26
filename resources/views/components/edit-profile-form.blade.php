@@ -1,4 +1,4 @@
-<div class="bg-white/80 backdrop-blur-xl border border-white/50 rounded-3xl p-8 shadow-xl">
+<div class="bg-white/80 backdrop-blur-xl border border-white/50 -3xl p-8 -xl">
     <h2 class="text-lg font-semibold text-teal-900 mb-6">{{ __('Modifier le profil') }}</h2>
     
     <form action="#" method="POST" class="space-y-5">
