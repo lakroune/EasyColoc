@@ -14,92 +14,52 @@
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach ($colocations as $coloc)
-                <div class="bg-white -2xl border border-gray-200 p-5   transition cursor-pointer">
+                <div
+                    class=" border border-gray-200 p-5 transition {{ !$coloc->status ? 'opacity-60 bg-gray-50 cursor-not-allowed' : 'bg-white   cursor-pointer' }}">
+
                     <div class="flex justify-between items-start mb-4">
                         <div
-                            class="w-12 h-12 bg-indigo-600 -xl flex items-center justify-center text-white font-bold text-lg">
-                            {{ $coloc->nom_coloc[0] }}
+                            class="w-12 h-12 {{ $coloc->status ? 'bg-indigo-600' : 'bg-gray-400' }}  flex items-center justify-center text-white font-bold text-lg">
+                            {{ strtoupper(substr($coloc->nom_coloc, 0, 1)) }}
                         </div>
+
                         <div class="flex gap-2">
-                            <span class="px-2 py-1 bg-amber-100 text-amber-700  text-[10px] font-medium">
-                                <i class="fas fa-crown mr-1"></i>{{ $coloc->owner_id == auth()->user()->id ? 'Proprietaire' : 'Membre' }}
+                            <span class="px-2 py-1 bg-amber-100 text-amber-700 text-[10px] font-medium ">
+
+                                {{ $coloc->owner_id == auth()->id() ? 'OWNER' : 'MEMBRE' }}
                             </span>
+
                             <span
-                                class="px-2 py-1 bg-emerald-100 text-emerald-700  text-[10px] font-medium">{{ $coloc->status?'Actif':'Inactif' }}</span>
+                                class="px-2 py-1 {{ $coloc->status ? 'bg-emerald-100 text-emerald-700' : 'bg-gray-200 text-gray-600' }} text-[10px] font-medium ">
+                                {{ $coloc->status ? 'ACTIF' : 'INACTIF' }}
+                            </span>
                         </div>
                     </div>
 
                     <h3 class="font-semibold text-gray-800 mb-1">{{ $coloc->nom_coloc }}</h3>
-                    <p class="text-[11px] text-gray-400 mb-4">{{ $coloc->colocationUsers->count() }} membres</p>
+                    <p class="text-[11px] text-gray-400 mb-4 uppercase">{{ $coloc->colocationUsers->count() }} Membres
+                    </p>
 
                     <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-                        <div class="w-8 h-8 bg-indigo-50 -lg flex items-center justify-center text-indigo-600">
-                            <a href="{{ route('colocations.show', $coloc->id) }}"><i class="fas fa-arrow-right"></i></a>
+                        <div>
+                            <p class="text-[10px] text-gray-400 uppercase">Dépenses</p>
+                            <p class="text-sm font-medium text-gray-800">{{ $coloc->depenses_count ?? 0 }}</p>
+                        </div>
+
+                        <div
+                            class="w-8 h-8 {{ $coloc->status ? 'bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white' : 'bg-gray-100 text-gray-400' }} rounded-lg flex items-center justify-center transition">
+                            @if ($coloc->status)
+                                <a href="{{ route('colocations.show', $coloc->id) }}">
+                                    <i class="fas fa-arrow-right text-xs"></i>
+                                </a>
+                            @else
+                                <i class="fas fa-lock text-xs"></i>
+                            @endif
                         </div>
                     </div>
                 </div>
             @endforeach
-
-            <div class="bg-gray-50 -2xl border border-gray-200 p-5 opacity-60">
-                <div class="flex justify-between items-start mb-4">
-                    <div
-                        class="w-12 h-12 bg-indigo-600 -xl flex items-center justify-center text-white font-bold text-lg">
-                        C
-                    </div>
-                    <div class="flex gap-2">
-                        <span class="px-2 py-1 bg-amber-100 text-amber-700  text-[10px] font-medium">
-                            <i class="fas fa-crown mr-1"></i>OWNER
-                        </span>
-                        <span
-                            class="px-2 py-1 bg-gray-200 text-gray-600  text-[10px] font-medium">CANCELLED</span>
-                    </div>
-                </div>
-
-                <h3 class="font-semibold text-gray-800 mb-1">coloc 2</h3>
-                <p class="text-[11px] text-gray-400 mb-4">2 MEMBRES</p>
-
-                <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-                    <div>
-                        <p class="text-[10px] text-gray-400 uppercase">Dépenses</p>
-                        <p class="text-sm font-medium text-gray-800">1</p>
-                    </div>
-                    <div class="w-8 h-8 bg-gray-200 -lg flex items-center justify-center text-gray-400">
-                        <i class="fas fa-arrow-right text-xs"></i>
-                    </div>
-                </div>
-            </div>
-
-            <div class="bg-gray-50 -2xl border border-gray-200 p-5 opacity-60">
-                <div class="flex justify-between items-start mb-4">
-                    <div
-                        class="w-12 h-12 bg-gray-400 -xl flex items-center justify-center text-white font-bold text-lg">
-                        C
-                    </div>
-                    <div class="flex gap-2">
-                        <span class="px-2 py-1 bg-gray-300 text-gray-600  text-[10px] font-medium">
-                            <i class="fas fa-door-open mr-1"></i>QUITTÉE
-                        </span>
-                        <span
-                            class="px-2 py-1 bg-gray-200 text-gray-600  text-[10px] font-medium">CANCELLED</span>
-                    </div>
-                </div>
-
-                <h3 class="font-semibold text-gray-800 mb-1">coloc 1</h3>
-                <p class="text-[11px] text-gray-400 mb-4">1 MEMBRES</p>
-
-                <div class="flex justify-between items-center pt-4 border-t border-gray-100">
-                    <div>
-                        <p class="text-[10px] text-gray-400 uppercase">Dépenses</p>
-                        <p class="text-sm font-medium text-gray-800">2</p>
-                    </div>
-                    <div class="w-8 h-8 bg-gray-200 -lg flex items-center justify-center text-gray-400">
-                        <i class="fas fa-arrow-right text-xs"></i>
-                    </div>
-                </div>
-            </div>
-
         </div>
-
         <div class="fixed bottom-6 left-6 bg-slate-900 -xl p-4 text-white w-48">
             <p class="text-[10px] text-gray-400 uppercase mb-1">Votre réputation</p>
             <p class="text-lg font-semibold mb-2">+0 points</p>
@@ -112,7 +72,7 @@
 
     <div id="createModal"
         class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white -2xl max-w-md w-full p-6 shadow-2xl">
+        <div class="bg-white -2xl max-w-md w-full p-6">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="font-semibold text-gray-800">Nouvelle colocation</h3>
                 <button onclick="closeModal('createModal')" class="text-gray-400 hover:text-gray-600">✕</button>

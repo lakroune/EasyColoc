@@ -107,16 +107,17 @@
                 <h3 class="text-sm font-semibold text-red-900 mb-1">Zone de danger</h3>
                 <p class="text-[11px] text-red-700 mb-4">Ces actions sont irréversibles.</p>
                 <div class="space-y-2">
-                    <form action="/colocation/{{ $colocation->id }}" method="POST"
-                        onsubmit="return confirm('Etes-vous sur de vouloir quitter la colocation ?');">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit"
-                            class="w-full py-2 bg-white text-red-600 border border-red-300  text-xs font-medium hover:bg-red-100 transition">
-                            Quitter
-                        </button>
-                    </form>
-                    @if ($colocation->owner_id === auth()->id())
+                    @if ($colocation->owner_id !== auth()->id())
+                        <form action="/colocation/{{ $colocation->id }}" method="POST"
+                            onsubmit="return confirm('Etes-vous sur de vouloir quitter la colocation ?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                class="w-full py-2 bg-white text-red-600 border border-red-300  text-xs font-medium hover:bg-red-100 transition">
+                                Quitter
+                            </button>
+                        </form>
+                    @else
                         <form action="{{ route('colocations.destroy', $colocation->id) }}" method="POST"
                             onsubmit="return confirm('Attention: Cette action est irréversible!');">
                             @csrf
