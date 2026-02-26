@@ -22,7 +22,7 @@
                         </div>
                         <div class="flex gap-2">
                             <span class="px-2 py-1 bg-amber-100 text-amber-700 rounded-full text-[10px] font-medium">
-                                <i class="fas fa-crown mr-1"></i>{{ 'Membre' }}
+                                <i class="fas fa-crown mr-1"></i>{{ $coloc->pivot->is_owner ? 'Proprietaire' : 'Membre' }}
                             </span>
                             <span
                                 class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-[10px] font-medium">{{ 'Inactif' }}</span>

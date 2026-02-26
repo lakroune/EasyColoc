@@ -11,10 +11,7 @@ class AuthServiceProvider extends ServiceProvider
     /**
      * Register services.
      */
-    public function register(): void
-    {
- 
-    }
+    public function register(): void {}
 
     /**
      * Bootstrap services.
@@ -25,5 +22,8 @@ class AuthServiceProvider extends ServiceProvider
             return $user->role === 'admin';
         });
 
+        Gate::define('invite_member', function ($user, $colocation) {
+            return $user->id === $colocation->owner_id;
+        });
     }
 }

@@ -20,7 +20,7 @@
                         actif</span>
                 </div>
                 <div class="flex-1 overflow-y-auto p-4 space-y-3">
-                    <div class="p-3 bg-gray-50 rounded-xl flex items-center gap-3">
+                    <div class="p-3 bg-gray-50  flex items-center gap-3">
                         <img src="https://ui-avatars.com/api/?name=User+2&background=0f4c4c&color=fff&size=40"
                             class="w-10 h-10 rounded-full">
                         <div class="flex-1">
@@ -46,7 +46,7 @@
                     </button>
                 </div>
                 <div class="flex-1 overflow-y-auto p-4 space-y-3">
-                    <div class="p-3 bg-gray-50 rounded-xl">
+                    <div class="p-3 bg-gray-50 ">
                         <div class="flex justify-between items-start mb-1">
                             <div class="flex items-center gap-2">
                                 <div class="w-7 h-7 bg-emerald-100 rounded-lg flex items-center justify-center">
@@ -61,7 +61,7 @@
                         </div>
                         <p class="text-[10px] text-gray-400">Payé par user2</p>
                     </div>
-                    <div class="p-8 text-center text-gray-400 border-2 border-dashed border-gray-200 rounded-xl">
+                    <div class="p-8 text-center text-gray-400 border-2 border-dashed border-gray-200 ">
                         <i class="fas fa-receipt text-2xl mb-2"></i>
                         <p class="text-xs">Aucune autre dépense</p>
                     </div>
@@ -77,7 +77,7 @@
                 <h3 class="font-semibold text-gray-800 text-sm mb-1">Inviter un membre</h3>
                 <p class="text-[11px] text-gray-400 mb-4">Ajoutez quelqu'un à votre colocation</p>
                 <button onclick="openModal('inviteModal')"
-                    class="w-full py-2.5 bg-[#0f4c4c] text-white rounded-xl text-xs font-medium">
+                    class="w-full py-2.5 bg-[#0f4c4c] text-white  text-xs font-medium">
                     Inviter
                 </button>
             </div>
@@ -87,14 +87,26 @@
                 <h3 class="text-sm font-semibold text-red-900 mb-1">Zone de danger</h3>
                 <p class="text-[11px] text-red-700 mb-4">Ces actions sont irréversibles.</p>
                 <div class="space-y-2">
-                    <button
-                        class="w-full py-2 bg-white text-red-600 border border-red-300 rounded-xl text-xs font-medium hover:bg-red-100 transition">
-                        Quitter
-                    </button>
-                    <button
-                        class="w-full py-2 bg-red-600 text-white rounded-xl text-xs font-medium hover:bg-red-700 transition">
-                        Annuler la colocation
-                    </button>
+                    <form action="/colocation/{{ $colocation->id }}" method="POST"
+                        onsubmit="return confirm('Etes-vous sur de vouloir quitter la colocation ?');">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit"
+                            class="w-full py-2 bg-white text-red-600 border border-red-300  text-xs font-medium hover:bg-red-100 transition">
+                            Quitter
+                        </button>
+                    </form>
+                    @if ($colocation->owner_id === auth()->id())
+                        <form action="{{ route('colocations.destroy', $colocation->id) }}" method="POST"
+                            onsubmit="return confirm('Attention: Cette action est irréversible!');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit"
+                                class="w-full py-2 bg-red-600 text-white  text-xs font-medium hover:bg-red-700 transition">
+                                Annuler la colocation
+                            </button>
+                        </form>
+                    @endif
                 </div>
             </div>
 
@@ -110,12 +122,14 @@
                 <h3 class="font-semibold text-gray-800 text-sm">Inviter un membre</h3>
                 <button onclick="closeModal('inviteModal')" class="text-gray-400 hover:text-gray-600">✕</button>
             </div>
-            <form class="space-y-3">
-                <input type="email"
-                    class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-[#0f4c4c]"
+            <form action=" {{ route('invitations.store') }}" method="POST" class="space-y-3">
+                @csrf
+                <input type="hidden" name="colocation_id" value="{{ $colocation->id }}">
+                <input type="email" name="email"
+                    class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200  text-xs focus:outline-none focus:border-[#0f4c4c]"
                     placeholder="Email du membre *">
                 <button type="submit"
-                    class="w-full py-3 bg-[#0f4c4c] text-white text-xs font-semibold rounded-xl hover:opacity-90 transition">
+                    class="w-full py-3 bg-[#0f4c4c] text-white text-xs font-semibold  hover:opacity-90 transition">
                     Envoyer
                 </button>
             </form>
@@ -131,25 +145,25 @@
             </div>
             <form class="space-y-3">
                 <input type="text"
-                    class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-[#0f4c4c]"
+                    class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200  text-xs focus:outline-none focus:border-[#0f4c4c]"
                     placeholder="Titre *" required>
                 <div class="grid grid-cols-2 gap-3">
                     <input type="number" step="0.01"
-                        class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-[#0f4c4c]"
+                        class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200  text-xs focus:outline-none focus:border-[#0f4c4c]"
                         placeholder="Montant *" required>
                     <input type="date"
-                        class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-[#0f4c4c]"
+                        class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200  text-xs focus:outline-none focus:border-[#0f4c4c]"
                         required>
                 </div>
                 <select
-                    class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:outline-none focus:border-[#0f4c4c]">
+                    class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200  text-xs focus:outline-none focus:border-[#0f4c4c]">
                     <option>Catégorie</option>
                     <option>Alimentation</option>
                     <option>Logement</option>
                     <option>Loisirs</option>
                 </select>
                 <button type="submit"
-                    class="w-full py-3 bg-[#0f4c4c] text-white text-xs font-semibold rounded-xl hover:opacity-90 transition">
+                    class="w-full py-3 bg-[#0f4c4c] text-white text-xs font-semibold  hover:opacity-90 transition">
                     Ajouter
                 </button>
             </form>

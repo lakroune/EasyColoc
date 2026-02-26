@@ -5,6 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\Invetation;
 use App\Http\Requests\StoreInvetationRequest;
 use App\Http\Requests\UpdateInvetationRequest;
+use App\Mail\InvitationMail;
+use App\Models\Colocation;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class InvetationController extends Controller
 {
@@ -29,7 +33,13 @@ class InvetationController extends Controller
      */
     public function store(StoreInvetationRequest $request)
     {
-        //
+        $data = $request->validated();
+        DB::transaction(function () use ($data) {
+            $colocation = Colocation::find($data['colocation_id']);
+            Mail::to($data['email'])->send(new InvitationMail($colocation));
+            Invetation::create($data);
+        });
+        return back()->with('success', 'Invitation envoyée avec succès');
     }
 
     /**

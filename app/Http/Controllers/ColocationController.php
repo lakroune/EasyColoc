@@ -16,12 +16,12 @@ class ColocationController extends Controller
      */
     public function index()
     {
-        $colocations = Colocation::with(['colocationUsers.user'])
-            ->where('owner_id', auth()->id())
+        $colocations = auth()->user()->colocations()
+            ->with(['colocationUsers.user'])
             ->get();
-        return view('colocation.index', compact('colocations'));
-    }
 
+        return $colocations;// view('colocation.index', compact('colocations'));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -77,12 +77,23 @@ class ColocationController extends Controller
         //
     }
 
+
     /**
-     * Remove the specified resource from storage.
+     * Quitter une colocation.
+     * 
      */
+    public function leave(Colocation $colocation)
+    {
+        $colocation->users()->detach(auth()->id());
+        return redirect()->route('dashboard')->with('success', 'Vous avez quitté la colocation.');
+    }
+
     public function destroy(Colocation $colocation)
     {
+        if ($colocation->owner_id !== auth()->id()) {
+            abort(403);
+        }
         $colocation->update(['status' => false]);
-        return back()->with('success', 'Colocation annulée avec succès');
+        return redirect()->route('dashboard')->with('success', 'vous avez annulé la colocation.');
     }
 }
