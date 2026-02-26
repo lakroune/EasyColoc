@@ -21,7 +21,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('colocations', ColocationController::class);
-// Route::resource('expenses', DepenseController::class);
+Route::resource('expenses', DepenseController::class);
+Route::resource('categories', InvetationController::class);
 Route::resource('invitations', InvetationController::class);
 Route::get('admin', [ColocationController::class, 'stats'])->name('admin.stats');
 Route::get('admins', [ColocationController::class, 'stats'])->name('admin.users');

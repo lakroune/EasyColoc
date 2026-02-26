@@ -54,7 +54,7 @@
                     @if ($colocation->colocationUsers)
                         <div class="p-8 text-center text-gray-400 border-2 border-dashed border-gray-200 ">
                             <i class="fas fa-receipt text-2xl mb-2"></i>
-                            <p class="text-xs">Aucune autre dépense</p>
+                            <p class="text-xs">Aucune nouvelle dépense</p>
                         </div>
                     @else
                         @foreach ($colocation->colocationUsers as $depense)
@@ -92,7 +92,14 @@
                     Inviter
                 </button>
             </div>
-
+            <div class="bg-white -2xl border border-gray-100 p-5">
+                <h3 class="font-semibold text-gray-800 text-sm mb-1">Catégories</h3>
+                <p class="text-[11px] text-gray-400 mb-4">Gérez les types de dépenses</p>
+                <button onclick="openModal('categoryModal')"
+                    class="w-full py-2.5 bg-white text-[#0f4c4c] border border-[#0f4c4c] text-xs font-medium hover:bg-gray-50 transition">
+                    Ajouter une catégorie
+                </button>
+            </div>
             <div class="bg-red-50 -2xl p-5 border border-red-200">
 
                 <h3 class="text-sm font-semibold text-red-900 mb-1">Zone de danger</h3>
@@ -146,7 +153,32 @@
             </form>
         </div>
     </div>
+    {{-- Modal Catégorie --}}
+    <div id="categoryModal"
+        class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white -2xl max-w-sm w-full p-5 shadow-2xl">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-semibold text-gray-800 text-sm">Nouvelle catégorie</h3>
+                <button onclick="closeModal('categoryModal')" class="text-gray-400 hover:text-gray-600">✕</button>
+            </div>
+            <form action="{{ route('categories.store') }}" method="POST" class="space-y-3">
+                @csrf
+                <input type="hidden" name="colocation_id" value="{{ $colocation->id }}">
 
+                <div>
+                    <label class="text-[10px] text-gray-400 uppercase font-bold mb-1 block">Nom de la catégorie</label>
+                    <input type="text" name="nom" required
+                        class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 text-xs focus:outline-none focus:border-[#0f4c4c]"
+                        placeholder="Ex: Transport, Factures...">
+                </div>
+                <button type="submit"
+                    class="w-full py-3 bg-[#0f4c4c] text-white text-xs font-semibold hover:opacity-90 transition">
+                    Enregistrer la catégorie
+                </button>
+            </form>
+        </div>
+    </div>
+    {{-- model depense --}}
     <div id="expenseModal"
         class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white -2xl max-w-md w-full p-5 shadow-2xl">
