@@ -14,18 +14,33 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
+ 
 Route::middleware('auth')->group(function () {
+    
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::resource('colocations', ColocationController::class);
-    Route::resource('expenses', DepenseController::class);
-    Route::resource('categories', InvetationController::class);
-    Route::get('admin', [ColocationController::class, 'stats'])->name('admin.stats');
-    Route::get('admins', [ColocationController::class, 'stats'])->name('admin.users');
-    Route::post('invitations', [InvetationController::class, 'store'])->name('invitations.store');
+
+    // --- Colocations Routes (Manual) ---
+    Route::get('/colocations', [ColocationController::class, 'index'])->name('colocations.index');
+    Route::post('/colocations', [ColocationController::class, 'store'])->name('colocations.store');
+    Route::get('/colocations/{colocation}', [ColocationController::class, 'show'])->name('colocations.show');
+    Route::delete('/colocations/{colocation}', [ColocationController::class, 'destroy'])->name('colocations.destroy');
+    Route::put('/colocations/{colocation}', [ColocationController::class, 'leave'])->name('colocations.leave');
+
+    Route::get('/expenses', [DepenseController::class, 'index'])->name('expenses.index');
+    Route::post('/expenses', [DepenseController::class, 'store'])->name('expenses.store');
+    Route::delete('/expenses/{expense}', [DepenseController::class, 'destroy'])->name('expenses.destroy');
+
+    Route::post('/categories', [InvetationController::class, 'store'])->name('categories.store');
+    
+    Route::post('/invitations', [InvetationController::class, 'store'])->name('invitations.store');
     Route::get('/invitations/{token}', [InvetationController::class, 'show'])->name('invitations.show');
     Route::post('/invitations/{token}', [InvetationController::class, 'accepter'])->name('invitations.accepter');
+
+    Route::get('/admin', [ColocationController::class, 'stats'])->name('admin.stats');
+    Route::get('/admins', [ColocationController::class, 'stats'])->name('admin.users');
+
 });
 
 

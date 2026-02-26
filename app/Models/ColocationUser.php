@@ -13,7 +13,7 @@ class ColocationUser extends Model
         'colocation_id',
         'user_id',
         'is_owner',
-        'left_at',
+        'is_leave',
     ];
 
     public function depenses()

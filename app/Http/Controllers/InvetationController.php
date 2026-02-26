@@ -59,17 +59,32 @@ class InvetationController extends Controller
      */
     public function accepter($token)
     {
-        if (!auth()->check())
-            abort(403);
+        if (!auth()->check()) abort(403);
+
         $invitation = Invetation::where('token', $token)->firstOrFail();
-        
-        ColocationUser::updateOrCreate([
-            'colocation_id' => $invitation->colocation_id,
-            'user_id' => auth()->id(),
-            'is_owner' => false
-        ]);
-        $invitation->delete();
+
+        $dans_coloc = auth()->user()->colocationUsers()
+            ->where('is_leave', false) // dans la colocation
+            ->whereHas('colocation', function ($query) {
+                $query->where('status', true); // colocation active
+            })
+            ->exists();
+        if ($dans_coloc) {
+            return redirect()->route('colocations.index')
+                ->with('error', 'Vous avez déjà une colocation active. Vous devez la quitter avant d\'en rejoindre une nouvelle.');
+        }
+
+        DB::transaction(function () use ($invitation) {
+            ColocationUser::updateOrCreate([
+                'colocation_id' => $invitation->colocation_id,
+                'user_id' => auth()->id(),
+                'is_owner' => false
+            ]);
+
+            $invitation->delete();
+        });
+
         return redirect()->route('colocations.show', $invitation->colocation_id)
-            ->with('success', 'Bienvenue dans votre nouvelle colocation ');
+            ->with('success', 'Bienvenue dans votre nouvelle colocation');
     }
 }

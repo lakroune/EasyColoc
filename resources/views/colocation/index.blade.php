@@ -15,7 +15,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach ($colocations as $coloc)
                 <div
-                    class=" border border-gray-200 p-5 transition {{ !$coloc->status ? 'opacity-60 bg-gray-50 cursor-not-allowed' : 'bg-white   cursor-pointer' }}">
+                    class=" border border-gray-200 p-5 transition {{ !$coloc->status || $coloc->colocationUsers->where('user_id', auth()->id())->first()->is_leave  ? 'opacity-60 bg-gray-50 cursor-not-allowed' : 'bg-white   cursor-pointer' }}">
 
                     <div class="flex justify-between items-start mb-4">
                         <div
@@ -48,7 +48,7 @@
 
                         <div
                             class="w-8 h-8 {{ $coloc->status ? 'bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white' : 'bg-gray-100 text-gray-400' }} rounded-lg flex items-center justify-center transition">
-                            @if ($coloc->status)
+                            @if ($coloc->status && !$coloc->colocationUsers->where('user_id', auth()->id())->first()->is_leave)
                                 <a href="{{ route('colocations.show', $coloc->id) }}">
                                     <i class="fas fa-arrow-right text-xs"></i>
                                 </a>

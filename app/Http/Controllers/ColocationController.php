@@ -17,11 +17,11 @@ class ColocationController extends Controller
     public function index()
     {
         $colocations = Colocation::with(['colocationUsers.user'])
-            ->whereHas('colocationUsers', function ($query)  {
+            ->whereHas('colocationUsers', function ($query) {
                 $query->where('user_id', auth()->user()->id);
             })
             ->get();
-        return view('colocation.index', compact('colocations'));
+        return  view('colocation.index', compact('colocations'));
     }
     /**
      * Show the form for creating a new resource.
@@ -47,7 +47,7 @@ class ColocationController extends Controller
                 'user_id' => auth()->user()->id,
                 'colocation_id' => $colocation->id,
                 'is_owner' => true,
-                'left_at' => null
+                'is_leave' => false
             ]);
         });
         return back()->with('success', 'Colocation ajoutée avec succès');
@@ -85,8 +85,10 @@ class ColocationController extends Controller
      */
     public function leave(Colocation $colocation)
     {
-        $colocation->users()->detach(auth()->id());
-        return redirect()->route('dashboard')->with('success', 'Vous avez quitté la colocation.');
+        ColocationUser::where('colocation_id', $colocation->id)
+            ->where('user_id', auth()->id())
+            ->update(['is_leave' => true]);
+        return redirect()->route('colocations.index')->with('success', 'Vous avez quitté la colocation.');
     }
 
     public function destroy(Colocation $colocation)
@@ -95,6 +97,6 @@ class ColocationController extends Controller
             abort(403);
         }
         $colocation->update(['status' => false]);
-        return redirect()->route('dashboard')->with('success', 'vous avez annulé la colocation.');
+        return redirect()->route('colocations.index')->with('success', 'vous avez annulé la colocation.');
     }
 }

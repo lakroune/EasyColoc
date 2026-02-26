@@ -108,10 +108,10 @@
                 <p class="text-[11px] text-red-700 mb-4">Ces actions sont irréversibles.</p>
                 <div class="space-y-2">
                     @if ($colocation->owner_id !== auth()->id())
-                        <form action="/colocation/{{ $colocation->id }}" method="POST"
+                        <form action="{{ route('colocations.leave', $colocation->id) }}" method="POST"
                             onsubmit="return confirm('Etes-vous sur de vouloir quitter la colocation ?');">
                             @csrf
-                            @method('DELETE')
+                            @method('PUT')
                             <button type="submit"
                                 class="w-full py-2 bg-white text-red-600 border border-red-300  text-xs font-medium hover:bg-red-100 transition">
                                 Quitter
