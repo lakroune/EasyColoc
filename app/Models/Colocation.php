@@ -27,4 +27,8 @@ class Colocation extends Model
     {
         return $this->hasMany(ColocationUser::class);
     }
+    public function invetations()
+    {
+        return $this->hasMany(Invetation::class);
+    }
 }
