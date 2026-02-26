@@ -13,12 +13,12 @@
     <div class="max-w-6xl mx-auto">
 
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @foreach ($colocations as $colocation)
+            @foreach ($colocations as $coloc)
                 <div class="bg-white rounded-2xl border border-gray-200 p-5 hover:shadow-lg transition cursor-pointer">
                     <div class="flex justify-between items-start mb-4">
                         <div
                             class="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-lg">
-                            {{ $colocation  ->nom_coloc[0] }}
+                            {{ $coloc  ->nom_coloc[0] }}
                         </div>
                         <div class="flex gap-2">
                             <span class="px-2 py-1 bg-amber-100 text-amber-700 rounded-full text-[10px] font-medium">
@@ -29,13 +29,13 @@
                         </div>
                     </div>
 
-                    <h3 class="font-semibold text-gray-800 mb-1">{{ $colocation-> nom_coloc }}</h3>
-                    <p class="text-[11px] text-gray-400 mb-4">1 MEMBRES</p>
+                    <h3 class="font-semibold text-gray-800 mb-1">{{ $coloc-> nom_coloc }}</h3>
+                    <p class="text-[11px] text-gray-400 mb-4">{{ $coloc ->colocationUsers->count() }} membres</p>
 
                     <div class="flex justify-between items-center pt-4 border-t border-gray-100">
                         <div>
                             <p class="text-[10px] text-gray-400 uppercase">Dépenses</p>
-                            <p class="text-sm font-medium text-gray-800">0</p>
+                            {{-- <p class="text-sm font-medium text-gray-800">{{ $coloc ->colocationUsers->depense->count() }}</p> --}}
                         </div>
                         <div class="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center text-indigo-600">
                             <i class="fas fa-arrow-right text-xs"></i>

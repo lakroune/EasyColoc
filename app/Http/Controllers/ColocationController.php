@@ -16,7 +16,9 @@ class ColocationController extends Controller
      */
     public function index()
     {
-        $colocations = Colocation::with('colocationUsers')->where('owner_id', auth()->user()->id)->get();
+        $colocations = Colocation::with(['colocationUsers.user'])
+            ->where('owner_id', auth()->id())
+            ->get();
         return view('colocation.index', compact('colocations'));
     }
 
