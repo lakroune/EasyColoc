@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Colocation;
 use App\Http\Requests\StoreColocationRequest;
 use App\Http\Requests\UpdateColocationRequest;
+use App\Models\ColocationUser;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ColocationController extends Controller
@@ -14,7 +16,8 @@ class ColocationController extends Controller
      */
     public function index()
     {
-       return view('colocation.index');
+        $colocations = Colocation::with('colocationUsers')->where('owner_id', auth()->user()->id)->get();
+        return view('colocation.index', compact('colocations'));
     }
 
     /**
@@ -34,7 +37,16 @@ class ColocationController extends Controller
         $data = $request->validated();
         $data['status'] = true;
         $data['token'] = Str::random(10);
-        $colocation = Colocation::create($data);
+        $data['owner_id'] = auth()->user()->id;
+        DB::transaction(function () use ($data) {
+            $colocation = Colocation::create($data);
+            ColocationUser::create([
+                'user_id' => auth()->user()->id,
+                'colocation_id' => $colocation->id,
+                'is_owner' => true,
+                'left_at' => null
+            ]);
+        });
         return back()->with('success', 'Colocation ajoutée avec succès');
     }
 

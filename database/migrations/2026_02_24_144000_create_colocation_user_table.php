@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('colocation_id')->constrained('colocations')->onDelete('cascade');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-
             $table->boolean('is_owner')->default(false);
             $table->timestamp('left_at')->nullable(); //
             $table->timestamps();

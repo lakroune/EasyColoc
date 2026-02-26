@@ -1,90 +1,139 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
-            <div>
-                <h1 class="text-xl font-semibold text-gray-800">Appartement Paris Centre</h1>
-                <p class="text-gray-400 text-xs mt-0.5">Créée le 15 janvier 2024</p>
-            </div>
-            <button onclick="openModal('inviteModal')"
-                class="px-4 py-2 bg-[#0f4c4c] text-white rounded-xl text-xs font-medium">
-                <i class="fas fa-user-plus mr-2"></i>Inviter
+            <h1 class="text-xl font-semibold text-gray-800">MES COLOCATIONS</h1>
+            <button onclick="openModal('createModal')"
+                class="px-4 py-2 bg-indigo-600 text-white rounded-xl text-xs font-medium flex items-center gap-2">
+                <i class="fas fa-plus"></i>
+                Nouvelle colocation
             </button>
         </div>
     </x-slot>
 
-    <div class="max-w-4xl mx-auto space-y-6">
+    <div class="max-w-6xl mx-auto">
 
-
-
-        <div class="bg-white rounded-2xl border border-gray-100">
-            <div class="p-5 border-b border-gray-100 flex justify-between items-center">
-                <h2 class="font-semibold text-gray-800 text-sm">Membres</h2>
-                <span class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-[11px] font-medium">4
-                    actifs</span>
-            </div>
-
-            <div class="divide-y divide-gray-100">
-                <div class="p-4 flex items-center justify-between hover:bg-gray-50">
-                    <div class="flex items-center gap-3">
-                        <img src="https://ui-avatars.com/api/?name=Jean+Dupont&background=0f4c4c&color=fff&size=40"
-                            class="w-10 h-10 rounded-full">
-                        <div>
-                            <div class="flex items-center gap-2">
-                                <p class="text-xs font-medium text-gray-800">Jean Dupont</p>
-                                <span class="px-1.5 py-0.5 bg-[#0f4c4c] text-white text-[11px] rounded">Owner</span>
-                            </div>
-                            <p class="text-[11px] text-gray-400">jean.dupont@email.com</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            @foreach ($colocations as $colocation)
+                <div class="bg-white rounded-2xl border border-gray-200 p-5 hover:shadow-lg transition cursor-pointer">
+                    <div class="flex justify-between items-start mb-4">
+                        <div
+                            class="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-lg">
+                            {{ $colocation  ->nom_coloc[0] }}
+                        </div>
+                        <div class="flex gap-2">
+                            <span class="px-2 py-1 bg-amber-100 text-amber-700 rounded-full text-[10px] font-medium">
+                                <i class="fas fa-crown mr-1"></i>{{  'Membre' }}
+                            </span>
+                            <span
+                                class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-[10px] font-medium">{{  'Inactif' }}</span>
                         </div>
                     </div>
-                    <div class="text-right">
-                        <p class="text-sm font-semibold text-emerald-600">+45.50 €</p>
+
+                    <h3 class="font-semibold text-gray-800 mb-1">{{ $colocation-> nom_coloc }}</h3>
+                    <p class="text-[11px] text-gray-400 mb-4">1 MEMBRES</p>
+
+                    <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+                        <div>
+                            <p class="text-[10px] text-gray-400 uppercase">Dépenses</p>
+                            <p class="text-sm font-medium text-gray-800">0</p>
+                        </div>
+                        <div class="w-8 h-8 bg-indigo-50 rounded-lg flex items-center justify-center text-indigo-600">
+                            <i class="fas fa-arrow-right text-xs"></i>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+
+            <div class="bg-gray-50 rounded-2xl border border-gray-200 p-5 opacity-60">
+                <div class="flex justify-between items-start mb-4">
+                    <div
+                        class="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center text-white font-bold text-lg">
+                        C
+                    </div>
+                    <div class="flex gap-2">
+                        <span class="px-2 py-1 bg-amber-100 text-amber-700 rounded-full text-[10px] font-medium">
+                            <i class="fas fa-crown mr-1"></i>OWNER
+                        </span>
+                        <span
+                            class="px-2 py-1 bg-gray-200 text-gray-600 rounded-full text-[10px] font-medium">CANCELLED</span>
                     </div>
                 </div>
 
-                {{-- Member 2 --}}
-                <div class="p-4 flex items-center justify-between hover:bg-gray-50">
-                    <div class="flex items-center gap-3">
-                        <img src="https://ui-avatars.com/api/?name=Marie+Martin&background=10b981&color=fff&size=40"
-                            class="w-10 h-10 rounded-full">
-                        <div>
-                            <p class="text-xs font-medium text-gray-800">Marie Martin</p>
-                            <p class="text-[11px] text-gray-400">marie.martin@email.com</p>
-                        </div>
+                <h3 class="font-semibold text-gray-800 mb-1">coloc 2</h3>
+                <p class="text-[11px] text-gray-400 mb-4">2 MEMBRES</p>
+
+                <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+                    <div>
+                        <p class="text-[10px] text-gray-400 uppercase">Dépenses</p>
+                        <p class="text-sm font-medium text-gray-800">1</p>
                     </div>
-                    <div class="text-right">
-                        <p class="text-sm font-semibold text-red-500">-25.00 €</p>
+                    <div class="w-8 h-8 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400">
+                        <i class="fas fa-arrow-right text-xs"></i>
                     </div>
                 </div>
             </div>
+
+            <div class="bg-gray-50 rounded-2xl border border-gray-200 p-5 opacity-60">
+                <div class="flex justify-between items-start mb-4">
+                    <div
+                        class="w-12 h-12 bg-gray-400 rounded-xl flex items-center justify-center text-white font-bold text-lg">
+                        C
+                    </div>
+                    <div class="flex gap-2">
+                        <span class="px-2 py-1 bg-gray-300 text-gray-600 rounded-full text-[10px] font-medium">
+                            <i class="fas fa-door-open mr-1"></i>QUITTÉE
+                        </span>
+                        <span
+                            class="px-2 py-1 bg-gray-200 text-gray-600 rounded-full text-[10px] font-medium">CANCELLED</span>
+                    </div>
+                </div>
+
+                <h3 class="font-semibold text-gray-800 mb-1">coloc 1</h3>
+                <p class="text-[11px] text-gray-400 mb-4">1 MEMBRES</p>
+
+                <div class="flex justify-between items-center pt-4 border-t border-gray-100">
+                    <div>
+                        <p class="text-[10px] text-gray-400 uppercase">Dépenses</p>
+                        <p class="text-sm font-medium text-gray-800">2</p>
+                    </div>
+                    <div class="w-8 h-8 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400">
+                        <i class="fas fa-arrow-right text-xs"></i>
+                    </div>
+                </div>
+            </div>
+
         </div>
 
-        {{-- Danger Zone --}}
-        <div class="bg-red-50 rounded-2xl p-5 border border-red-200">
-            <h3 class="text-sm font-semibold text-red-900 mb-1">Zone de danger</h3>
-            <p class="text-[11px] text-red-700 mb-3">Ces actions sont irréversibles.</p>
-            <div class="flex gap-2">
-                <button
-                    class="px-4 py-2 bg-white text-red-600 border border-red-300 rounded-xl text-xs">Quitter</button>
-                <button class="px-4 py-2 bg-red-600 text-white rounded-xl text-xs">Annuler la colocation</button>
+        <div class="fixed bottom-6 left-6 bg-slate-900 rounded-xl p-4 text-white w-48">
+            <p class="text-[10px] text-gray-400 uppercase mb-1">Votre réputation</p>
+            <p class="text-lg font-semibold mb-2">+0 points</p>
+            <div class="w-full bg-gray-700 rounded-full h-1.5">
+                <div class="bg-emerald-500 h-1.5 rounded-full" style="width: 0%"></div>
             </div>
         </div>
 
     </div>
 
-    {{-- Modal --}}
-    <div id="inviteModal"
+    <div id="createModal"
         class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="font-semibold text-gray-800 text-sm">Inviter un membre</h3>
-                <button onclick="closeModal('inviteModal')" class="text-gray-400">✕</button>
+                <h3 class="font-semibold text-gray-800">Nouvelle colocation</h3>
+                <button onclick="closeModal('createModal')" class="text-gray-400 hover:text-gray-600">✕</button>
             </div>
-            <form>
-                <input type="email"
-                    class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-xs mb-3"
-                    placeholder="Email du membre *">
-                <button type="button"
-                    class="w-full py-3 bg-[#0f4c4c] text-white text-xs font-semibold rounded-xl">Envoyer</button>
+            <form action=" {{ route('colocations.store') }}" method="POST" class="space-y-4">
+                @csrf
+                <div>
+                    <label class="block text-xs text-gray-600 mb-1">Nom de la colocation</label>
+                    <input type="text" name="nom_coloc"
+                        class="w-full px-3 py-2 border border-gray-200 rounded-xl text-sm focus:outline-none focus:border-indigo-500"
+                        placeholder="Ex: Appartement Paris">
+                </div>
+
+                <button type="submit"
+                    class="w-full py-2.5 bg-indigo-600 text-white rounded-xl text-sm font-medium hover:bg-indigo-700 transition">
+                    Créer
+                </button>
             </form>
         </div>
     </div>

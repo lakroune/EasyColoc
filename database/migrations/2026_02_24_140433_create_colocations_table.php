@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nom_coloc');
             $table->boolean('status')->default(true);
+            $table->foreignId('owner_id')->constrained('users')->onDelete('cascade');
             $table->string('token');
             $table->timestamps();
         });

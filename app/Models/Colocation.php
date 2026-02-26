@@ -16,10 +16,15 @@ class Colocation extends Model
         'nom_coloc',
         'status',
         'token',
+        'owner_id',
     ];
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'colocation_user')->withPivot('is_owner', 'left_at')->withTimestamps();
+        return $this->belongsTo(User::class);
+    }
+    public  function colocationUsers()
+    {
+        return $this->hasMany(ColocationUser::class);
     }
 }

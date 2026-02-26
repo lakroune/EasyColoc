@@ -70,9 +70,10 @@ class User extends Authenticatable
 
     public function colocations()
     {
-        return $this->belongsToMany(Colocation::class, 'colocation_user')
-            ->withPivot('is_owner', 'left_at')
-            ->withTimestamps();
+        return $this->hasMany(Colocation::class, 'owner_id');
     }
-
+    public function colocationUsers()
+    {
+        return $this->hasMany(ColocationUser::class);
+    }
 }

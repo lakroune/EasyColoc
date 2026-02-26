@@ -22,6 +22,7 @@ class ColocationFactory extends Factory
             'nom_coloc' => 'Coloc ' . fake()->city(),
             'status' => true,
             'token' => Str::random(10),
+            'owner_id' => User::factory(),
         ];
     }
 }
