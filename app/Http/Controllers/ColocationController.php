@@ -20,7 +20,7 @@ class ColocationController extends Controller
             ->with(['colocationUsers.user'])
             ->get();
 
-        return $colocations;// view('colocation.index', compact('colocations'));
+        return view('colocation.index', compact('colocations'));
     }
     /**
      * Show the form for creating a new resource.
@@ -57,7 +57,7 @@ class ColocationController extends Controller
      */
     public function show(Colocation $colocation)
     {
-        $colocation->load('colocationUsers.user');
+        $colocation = Colocation::with(['colocationUsers.user', 'colocationUsers.depenses'])->find($colocation->id);
         return view('colocation.show', compact('colocation'));
     }
 

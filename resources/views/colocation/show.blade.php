@@ -2,8 +2,8 @@
 
     <div class="flex justify-between items-center m-2">
         <div>
-            <h1 class="text-xl font-semibold text-gray-800">coloc 3</h1>
-            <p class="text-gray-400 text-xs mt-0.5">Créée le 26 février 2026</p>
+            <h1 class="text-xl font-semibold text-gray-800">{{ strtoupper($colocation->nom_coloc) }}</h1>
+            <p class="text-gray-400 text-xs mt-0.5">{{ $colocation->created_at->diffForHumans() }}</p>
         </div>
 
     </div>
@@ -13,58 +13,69 @@
 
         <div class="flex-1 flex gap-6 h-full">
 
-            <div class="flex-1 bg-white rounded-2xl border border-gray-100 flex flex-col h-full">
+            <div class="flex-1 bg-white -2xl border border-gray-100 flex flex-col h-full">
                 <div class="p-4 border-b border-gray-100 flex justify-between items-center">
                     <h2 class="font-semibold text-gray-800 text-sm">Membres</h2>
-                    <span class="px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-[11px] font-medium">1
+                    <span
+                        class="px-2 py-1 bg-emerald-100 text-emerald-700 -full text-[11px] font-medium">{{ $colocation->colocationUsers->count() }}
                         actif</span>
                 </div>
                 <div class="flex-1 overflow-y-auto p-4 space-y-3">
-                    <div class="p-3 bg-gray-50  flex items-center gap-3">
-                        <img src="https://ui-avatars.com/api/?name=User+2&background=0f4c4c&color=fff&size=40"
-                            class="w-10 h-10 rounded-full">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2">
-                                <p class="text-xs font-medium text-gray-800">user2</p>
-                                <span class="px-1.5 py-0.5 bg-[#0f4c4c] text-white text-[10px] rounded">Owner</span>
+                    @foreach ($colocation->colocationUsers as $membre)
+                        <div class="p-3 bg-gray-50  flex items-center gap-3">
+                            <img src="https://ui-avatars.com/api/?name={{ $membre->user->nom }} {{ $membre->user->prenom }}&background=0f4c4c&color=fff&size=40"
+                                class="w-10 h-10 -full">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2">
+                                    <p class="text-xs font-medium text-gray-800">{{ $membre->user->nom }}
+                                        {{ $membre->user->prenom }}</p>
+                                    <span class="px-1.5 py-0.5 bg-[#0f4c4c] text-white text-[10px] ">Owner</span>
+                                </div>
+                                <p class="text-[11px] text-gray-400">{{ $membre->user->email }}</p>
                             </div>
-                            <p class="text-[11px] text-gray-400">user2@example.com</p>
+                            <div class="text-right">
+                                <p class="text-sm font-semibold text-gray-800">{{ $membre->user->solde }}</p>
+                            </div>
                         </div>
-                        <div class="text-right">
-                            <p class="text-sm font-semibold text-gray-800">0.00 €</p>
-                        </div>
-                    </div>
+                    @endforeach
+
                 </div>
             </div>
 
-            <div class="flex-1 bg-white rounded-2xl border border-gray-100 flex flex-col h-full">
+            <div class="flex-1 bg-white -2xl border border-gray-100 flex flex-col h-full">
                 <div class="p-4 border-b border-gray-100 flex justify-between items-center">
                     <h2 class="font-semibold text-gray-800 text-sm">Dépenses</h2>
                     <button onclick="openModal('expenseModal')"
-                        class="w-7 h-7 bg-[#0f4c4c] text-white rounded-lg flex items-center justify-center text-xs">
+                        class="w-7 h-7 bg-[#0f4c4c] text-white -lg flex items-center justify-center text-xs">
                         <i class="fas fa-plus"></i>
                     </button>
                 </div>
                 <div class="flex-1 overflow-y-auto p-4 space-y-3">
-                    <div class="p-3 bg-gray-50 ">
-                        <div class="flex justify-between items-start mb-1">
-                            <div class="flex items-center gap-2">
-                                <div class="w-7 h-7 bg-emerald-100 rounded-lg flex items-center justify-center">
-                                    <i class="fas fa-shopping-cart text-emerald-600 text-[10px]"></i>
-                                </div>
-                                <div>
-                                    <p class="text-xs font-medium text-gray-800">Courses</p>
-                                    <p class="text-[10px] text-gray-400">26 Fév 2026</p>
-                                </div>
-                            </div>
-                            <p class="text-sm font-semibold text-gray-800">45.50 €</p>
+                    @if ($colocation->colocationUsers)
+                        <div class="p-8 text-center text-gray-400 border-2 border-dashed border-gray-200 ">
+                            <i class="fas fa-receipt text-2xl mb-2"></i>
+                            <p class="text-xs">Aucune autre dépense</p>
                         </div>
-                        <p class="text-[10px] text-gray-400">Payé par user2</p>
-                    </div>
-                    <div class="p-8 text-center text-gray-400 border-2 border-dashed border-gray-200 ">
-                        <i class="fas fa-receipt text-2xl mb-2"></i>
-                        <p class="text-xs">Aucune autre dépense</p>
-                    </div>
+                    @else
+                        @foreach ($colocation->colocationUsers as $depense)
+                            )
+                            <div class="p-3 bg-gray-50 ">
+                                <div class="flex justify-between items-start mb-1">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-7 h-7 bg-emerald-100 -lg flex items-center justify-center">
+                                            <i class="fas fa-shopping-cart text-emerald-600 text-[10px]"></i>
+                                        </div>
+                                        <div>
+                                            <p class="text-xs font-medium text-gray-800">Courses</p>
+                                            <p class="text-[10px] text-gray-400">26 Fév 2026</p>
+                                        </div>
+                                    </div>
+                                    <p class="text-sm font-semibold text-gray-800">45.50 €</p>
+                                </div>
+                                <p class="text-[10px] text-gray-400">Payé par user2</p>
+                            </div>
+                        @endforeach
+                    @endif
                 </div>
             </div>
 
@@ -72,7 +83,7 @@
 
         <div class="w-80 flex flex-col gap-6 h-full">
 
-            <div class="bg-white rounded-2xl border border-gray-100 p-5">
+            <div class="bg-white -2xl border border-gray-100 p-5">
 
                 <h3 class="font-semibold text-gray-800 text-sm mb-1">Inviter un membre</h3>
                 <p class="text-[11px] text-gray-400 mb-4">Ajoutez quelqu'un à votre colocation</p>
@@ -82,7 +93,7 @@
                 </button>
             </div>
 
-            <div class="bg-red-50 rounded-2xl p-5 border border-red-200">
+            <div class="bg-red-50 -2xl p-5 border border-red-200">
 
                 <h3 class="text-sm font-semibold text-red-900 mb-1">Zone de danger</h3>
                 <p class="text-[11px] text-red-700 mb-4">Ces actions sont irréversibles.</p>
@@ -117,7 +128,7 @@
     {{-- Modal Inviter --}}
     <div id="inviteModal"
         class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl">
+        <div class="bg-white -2xl max-w-sm w-full p-5 shadow-2xl">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="font-semibold text-gray-800 text-sm">Inviter un membre</h3>
                 <button onclick="closeModal('inviteModal')" class="text-gray-400 hover:text-gray-600">✕</button>
@@ -138,7 +149,7 @@
 
     <div id="expenseModal"
         class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white rounded-2xl max-w-md w-full p-5 shadow-2xl">
+        <div class="bg-white -2xl max-w-md w-full p-5 shadow-2xl">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="font-semibold text-gray-800 text-sm">Nouvelle dépense</h3>
                 <button onclick="closeModal('expenseModal')" class="text-gray-400 hover:text-gray-600">✕</button>
