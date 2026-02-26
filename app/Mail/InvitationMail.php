@@ -3,6 +3,7 @@
 namespace App\Mail;
 
 use App\Models\Colocation;
+use App\Models\Invetation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -13,11 +14,11 @@ class InvitationMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public Colocation $colocation;
+    public Invetation $invetation;
 
-    public function __construct(Colocation $colocation)
+    public function __construct(Invetation $invetation)
     {
-        $this->colocation = $colocation;
+        $this->invetation = $invetation;
     }
 
     public function envelope(): Envelope
@@ -29,10 +30,12 @@ class InvitationMail extends Mailable
 
     public function content(): Content
     {
+
         return new Content(
             view: 'emails.invitation',
             with: [
-                'inviteLink' => $this->colocation->token,
+                'invetation' => $this->invetation,
+                'colocation' => $this->invetation->colocation,
             ]
         );
     }

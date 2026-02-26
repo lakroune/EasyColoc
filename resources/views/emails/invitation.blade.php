@@ -10,9 +10,9 @@
     <p>
         Ttsiftat lik invitation bach tjoin <b>EasyColoc</b>.
     </p>
-    <a href="{{ $inviteLink }}"
-        style="">
-        {{ $inviteLink }}
+    <P> colocation : {{ $colocation->nom_coloc }} </P>
+    <a href="http://127.0.0.1:8000/invitations/{{ $invetation->token }}" style="">
+        clicker ici pour accepter
     </a>
     <p>
         Merci

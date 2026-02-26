@@ -10,7 +10,8 @@ class Invetation extends Model
     protected $table = 'invetations';
     protected $fillable = [
         'colocation_id',
-        'email'
+        'email',
+        'token',
     ];
 
     public function colocation()

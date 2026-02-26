@@ -1,12 +1,11 @@
-<aside id="sidebar" class="sidebar fixed lg:static inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-100 shadow-xl lg:shadow-none overflow-y-auto flex flex-col">
+<aside id="sidebar" class="sidebar fixed lg:static inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-100  lg:shadow-none overflow-y-auto flex flex-col">
     
     <div class="p-6 border-b border-gray-50 flex items-center gap-3">
-        <div class="w-9 h-9 bg-gradient-to-br from-teal-700 to-teal-900 rounded-xl flex items-center justify-center shadow-lg">
+        <div class="w-9 h-9 bg-gradient-to-br from-teal-700 to-teal-900 flex items-center justify-center ">
             <i class="fas fa-home text-white text-sm"></i>
         </div>
         <span class="font-bold text-teal-950 tracking-tight text-lg">EasyColoc</span>
     </div>
-
     <nav class="p-4 space-y-1 flex-1">
         <x-sidebar-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
             <i class="fas fa-chart-pie w-5"></i> {{ __('Tableau de bord') }}
@@ -16,8 +15,6 @@
             <i class="fas fa-house-user w-5"></i> {{ __('Ma Colocation') }}
         </x-sidebar-link>
 
-        
-        
 
         <x-sidebar-link :href="route('profile.edit')" :active="request()->routeIs('profile.*')">
             <i class="fas fa-user-circle w-5"></i> {{ __('Mon Profil') }}
@@ -39,7 +36,7 @@
     <div class="p-4 border-t border-gray-50">
         <form method="POST" action="{{ route('logout') }}">
             @csrf
-            <button type="submit" class="flex items-center gap-3 px-4 py-3 w-full text-red-600 hover:bg-red-50 rounded-xl transition text-xs font-medium">
+            <button type="submit" class="flex items-center gap-3 px-4 py-3 w-full text-red-600 hover:bg-red-50 transition text-xs font-medium">
                 <i class="fas fa-sign-out-alt w-5"></i> {{ __('Déconnexion') }}
             </button>
         </form>

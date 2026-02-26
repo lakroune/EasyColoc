@@ -7,8 +7,10 @@ use App\Http\Requests\StoreInvetationRequest;
 use App\Http\Requests\UpdateInvetationRequest;
 use App\Mail\InvitationMail;
 use App\Models\Colocation;
+use App\Models\ColocationUser;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 class InvetationController extends Controller
 {
@@ -34,11 +36,9 @@ class InvetationController extends Controller
     public function store(StoreInvetationRequest $request)
     {
         $data = $request->validated();
-        DB::transaction(function () use ($data) {
-            $colocation = Colocation::find($data['colocation_id']);
-            Mail::to($data['email'])->send(new InvitationMail($colocation));
-            Invetation::create($data);
-        });
+        $data['token'] = Str::random(32);
+        $invetation = Invetation::create($data);
+        Mail::to($data['email'])->send(new InvitationMail($invetation));
         return back()->with('success', 'Invitation envoyée avec succès');
     }
 
@@ -47,30 +47,26 @@ class InvetationController extends Controller
      */
     public function show(Invetation $invetation)
     {
-        //
+        if (! auth()->check()) {
+            return view('auth.login');
+        }
+        $colocation = $invetation->colocation;
+        return view('invitations.accept', compact('invetation', 'colocation'));
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * accepter une invitation
      */
-    public function edit(Invetation $invetation)
+    public function accepter($token)
     {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateInvetationRequest $request, Invetation $invetation)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Invetation $invetation)
-    {
-        //
+        $invitation = Invetation::where('token', $token)->firstOrFail();
+        ColocationUser::create([
+            'colocation_id' => $invitation->colocation_id,
+            'user_id' => auth()->id(),
+            'is_owner' => false
+        ]);
+        $invitation->delete();
+        return redirect()->route('colocations.show', $invitation->colocation_id)
+            ->with('success', 'Bienvenue dans votre nouvelle colocation ');
     }
 }

@@ -198,12 +198,12 @@
                         class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200  text-xs focus:outline-none focus:border-[#0f4c4c]"
                         required>
                 </div>
-                <select
-                    class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200  text-xs focus:outline-none focus:border-[#0f4c4c]">
-                    <option>Catégorie</option>
-                    <option>Alimentation</option>
-                    <option>Logement</option>
-                    <option>Loisirs</option>
+                <select name="category_id" required
+                    class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 text-xs focus:outline-none focus:border-[#0f4c4c]">
+                    <option value="">Sélectionner une catégorie</option>
+                    {{-- @foreach ($categories as $category) --}}
+                        {{-- <option value="{{ $category->id }}">{{ $category->nom }}</option> --}}
+                    {{-- @endforeach --}}
                 </select>
                 <button type="submit"
                     class="w-full py-3 bg-[#0f4c4c] text-white text-xs font-semibold  hover:opacity-90 transition">

@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('colocation_id')->constrained('colocations')->onDelete('cascade');
             $table->string('email');
-            $table->string('token')->default(Str::random(10));
+            $table->string('token')->default(Str::random(32));
             $table->boolean('status')->default(false);
             $table->timestamps();
         });
