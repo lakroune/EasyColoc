@@ -60,11 +60,13 @@ class ColocationController extends Controller
     {
         $membres = $colocation->colocationUsers()->where('is_leave', false)->with('user')->get();
         $categories = $colocation->categories()->get();
-        $depenses = [];
+        $depenses = collect();
         foreach ($membres as $membre) {
-            $depenses = $membre->depenses()->with(['categorie']) ->latest()->get();
+            $depensesmembre = $membre->depenses()->with(['categorie'])->latest()->get();
+            $depenses = $depenses->merge($depensesmembre);
         }
-        return view('colocation.show', compact('colocation', 'membres', 'categories', 'depenses'));
+        $depenses = $depenses->sortByDesc('created_at');
+        return   view('colocation.show', compact('colocation', 'membres', 'categories', 'depenses'));
     }
     /**
      * Show the form for editing the specified resource.
