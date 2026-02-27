@@ -22,14 +22,13 @@ class StoreColocationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nom_coloc' => 'required|string|max:100|unique:colocations,nom_coloc',
+            'nom_coloc' => 'required|string|max:100 ',
         ];
     }
     public function messages()
     {
         return [
             'nom_coloc.required' => 'Le nom de la colocation est requis.',
-            'nom_coloc.unique' => 'Le nom de la colocation doit être unique.',
         ];
     }
 }

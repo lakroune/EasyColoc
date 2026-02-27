@@ -40,8 +40,9 @@ class ColocationController extends Controller
 
         $data = $request->validated();
         $data['status'] = true;
-        $data['token'] = Str::random(10);
         $data['owner_id'] = auth()->user()->id;
+        if (ColocationUser::where('user_id', auth()->user()->id)->where("is_leave", false)->exists())
+            return back()->with('error', 'Vous avez déja une colocation en cours');
         DB::transaction(function () use ($data) {
             $colocation = Colocation::create($data);
             ColocationUser::create([
@@ -104,7 +105,7 @@ class ColocationController extends Controller
             $owner = User::find($colocation->owner_id);
 
             if ($user->solde < 0) {
-                $owner->solde -= $user->solde;
+                $owner->solde += $user->solde;
                 $owner->save();
             }
             $user->solde = 0;

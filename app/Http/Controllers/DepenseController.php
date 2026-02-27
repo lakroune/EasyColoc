@@ -31,10 +31,15 @@ class DepenseController extends Controller
      */
     public function store(StoreDepenseRequest $request)
     {
-        return DB::transaction(function () use ($request) {
+        DB::transaction(function () use ($request) {
             $data = $request->validated();
-            $data['colocation_user_id'] = auth()->user()->id;
+            $colocationUser = ColocationUser::where('user_id', auth()->id())
+                ->where('colocation_id', $request->colocation_id)
+                ->firstOrFail();
+
+            $data['colocation_user_id'] = $colocationUser->id;
             $depense = Depense::create($data);
+
             $membres = ColocationUser::where('is_leave', false)->where('colocation_id', $depense->colocationUser->colocation_id)->get();
             foreach ($membres as $membre) {
                 if ($membre->user_id === auth()->user()->id) {
@@ -44,8 +49,8 @@ class DepenseController extends Controller
                 }
                 $membre->user->save();
             }
-            return   back()->with('success', 'Depense ajoutée avec succès');
         });
+        return   back()->with('success', 'Depense ajoutée avec succès');
     }
 
     /**
