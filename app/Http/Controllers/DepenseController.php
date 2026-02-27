@@ -13,7 +13,7 @@ class DepenseController extends Controller
      */
     public function index()
     {
-       return view('expense.index');
+        return view('expense.index');
     }
 
     /**
@@ -29,7 +29,10 @@ class DepenseController extends Controller
      */
     public function store(StoreDepenseRequest $request)
     {
-        $depense = Depense::create($request->validated());
+
+        $data = $request->validated();
+        $data['colocation_user_id'] = auth()->user()->id;
+        $depense = Depense::create($data);
         return back()->with('success', 'Depense ajoutée avec succès');
     }
 
