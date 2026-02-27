@@ -6,6 +6,7 @@ use App\Models\Depense;
 use App\Http\Requests\StoreDepenseRequest;
 use App\Http\Requests\UpdateDepenseRequest;
 use App\Models\ColocationUser;
+use Illuminate\Support\Facades\DB;
 
 class DepenseController extends Controller
 {
@@ -30,12 +31,21 @@ class DepenseController extends Controller
      */
     public function store(StoreDepenseRequest $request)
     {
-
-        $data = $request->validated();
-        $data['colocation_user_id'] = auth()->user()->id;
-        $depense = Depense::create($data);
-        $membres =ColocationUser::where('is_leave', false)-> where('colocation_id', $depense->colocationUser->colocation_id)->get();
-        return   back()->with('success', 'Depense ajoutée avec succès');
+        return DB::transaction(function () use ($request) {
+            $data = $request->validated();
+            $data['colocation_user_id'] = auth()->user()->id;
+            $depense = Depense::create($data);
+            $membres = ColocationUser::where('is_leave', false)->where('colocation_id', $depense->colocationUser->colocation_id)->get();
+            foreach ($membres as $membre) {
+                if ($membre->user_id === auth()->user()->id) {
+                    $membre->user->solde +=  $data['montant'] - ($data['montant'] / (count($membres)));
+                } else {
+                    $membre->user->solde -=   ($data['montant'] / (count($membres)));
+                }
+                $membre->user->save();
+            }
+            return   back()->with('success', 'Depense ajoutée avec succès');
+        });
     }
 
     /**
