@@ -20,4 +20,8 @@ class Depense extends Model
     {
         return $this->belongsTo(ColocationUser::class);
     }
+    public function categorie()
+    {
+        return $this->belongsTo(Categorie::class);
+    }
 }

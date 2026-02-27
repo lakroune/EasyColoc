@@ -58,7 +58,7 @@ class ColocationController extends Controller
      */
     public function show(Colocation $colocation)
     {
-        $colocation = Colocation::with(['colocationUsers.user', 'colocationUsers.depenses'])->find($colocation->id);
+        $colocation = Colocation::with(['colocationUsers.user', 'colocationUsers.depenses', 'categories'])->find($colocation->id);
         return view('colocation.show', compact('colocation'));
     }
 

@@ -31,4 +31,8 @@ class Colocation extends Model
     {
         return $this->hasMany(Invetation::class);
     }
+    public function categories()
+    {
+        return $this->hasMany(Categorie::class);
+    }
 }
