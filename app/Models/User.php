@@ -23,9 +23,9 @@ class User extends Authenticatable
         'email',
         'password',
         'solde',
+        'reputation',
         'is_admin',
         'is_banned',
-        'is_member',
     ];
 
     /**
@@ -50,7 +50,6 @@ class User extends Authenticatable
             'password' => 'hashed',
             'is_admin' => 'boolean',
             'is_banned' => 'boolean',
-            'is_member' => 'boolean',
         ];
     }
 

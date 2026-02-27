@@ -102,11 +102,13 @@ class ColocationController extends Controller
 
             $user = $membre->user;
 
-            $owner = User::find($colocation->owner_id);
-
+            $owner = User::findOrFail($colocation->owner_id);
             if ($user->solde < 0) {
                 $owner->solde += $user->solde;
                 $owner->save();
+                $user->decrement('reputation');
+            } else {
+                $user->increment('reputation');
             }
             $user->solde = 0;
             $user->save();

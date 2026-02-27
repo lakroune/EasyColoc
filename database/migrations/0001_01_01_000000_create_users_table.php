@@ -19,10 +19,10 @@ return new class extends Migration
             $table->rememberToken();
             $table->string('nom');
             $table->string('prenom');
+            $table->integer('reputation')->default('0');
             $table->float('solde')->default('0');
             $table->boolean('is_admin')->default('false');
             $table->boolean('is_banned')->default('false');
-            $table->boolean('is_member')->default('false');
             $table->timestamps();
         });
 
