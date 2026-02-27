@@ -12,8 +12,10 @@ class Depense extends Model
 
     protected $table = 'depenses';
     protected $fillable = [
-        'title',
+        'titre',
         'montant',
+        'categorie_id',
+        'colocation_user_id',
     ];
 
     public function colocationUser()

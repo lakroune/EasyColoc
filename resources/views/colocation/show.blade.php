@@ -190,25 +190,26 @@
                 <h3 class="font-semibold text-gray-800 text-sm">Nouvelle dépense</h3>
                 <button onclick="closeModal('expenseModal')" class="text-gray-400 hover:text-gray-600">✕</button>
             </div>
-            <form class="space-y-3">
-                <input type="text"
+            <form class="space-y-3" action="{{ route('expenses.store') }}" method="POST">
+                @csrf
+                @method('POST')
+                <input type="hidden" name="colocation_id" value="{{ $colocation->id }}">
+                <input type="text" name="titre"
                     class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200  text-xs focus:outline-none focus:border-[#0f4c4c]"
                     placeholder="Titre *" required>
                 <div class="grid grid-cols-2 gap-3">
-                    <input type="number" step="0.01"
+                    <input type="number" step="0.01" name="montant"
                         class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200  text-xs focus:outline-none focus:border-[#0f4c4c]"
                         placeholder="Montant *" required>
-                    <input type="date"
-                        class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200  text-xs focus:outline-none focus:border-[#0f4c4c]"
-                        required>
+                    <select name="categorie_id" required 
+                        class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200  text-xs focus:outline-none focus:border-[#0f4c4c]">
+                        <option value="" disabled selected>Sélectionner une catégorie</option>
+                        @foreach ($colocation->categories as $category)
+                            <option value="{{ $category->id }}">{{ $category->nom_categorie }}</option>
+                        @endforeach
+                    </select>
                 </div>
-                <select name="category_id" required
-                    class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 text-xs focus:outline-none focus:border-[#0f4c4c]">
-                    <option value="" disabled selected >Sélectionner une catégorie</option>
-                    @foreach ($colocation->categories as $category)
-                        <option value="{{ $category->id }}">{{ $category->nom_categorie }}</option>
-                    @endforeach 
-                </select>
+
                 <button type="submit"
                     class="w-full py-3 bg-[#0f4c4c] text-white text-xs font-semibold  hover:opacity-90 transition">
                     Ajouter
