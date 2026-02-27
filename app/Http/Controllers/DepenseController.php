@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Depense;
 use App\Http\Requests\StoreDepenseRequest;
 use App\Http\Requests\UpdateDepenseRequest;
+use App\Models\ColocationUser;
 
 class DepenseController extends Controller
 {
@@ -33,7 +34,8 @@ class DepenseController extends Controller
         $data = $request->validated();
         $data['colocation_user_id'] = auth()->user()->id;
         $depense = Depense::create($data);
-        return back()->with('success', 'Depense ajoutée avec succès');
+        $membres =ColocationUser::where('is_leave', false)-> where('colocation_id', $depense->colocationUser->colocation_id)->get();
+        return   back()->with('success', 'Depense ajoutée avec succès');
     }
 
     /**

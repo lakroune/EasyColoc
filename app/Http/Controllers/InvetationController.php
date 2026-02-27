@@ -48,7 +48,7 @@ class InvetationController extends Controller
     public function show(Invetation $invetation)
     {
         if (! auth()->check()) {
-            return view('auth.login');
+            return view('auth.register');
         }
         $colocation = $invetation->colocation;
         return view('invitations.accept', compact('invetation', 'colocation'));

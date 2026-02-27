@@ -89,8 +89,8 @@
         </div>
 
         <div class="w-80 flex flex-col gap-6 h-full">
-
-            <div class="bg-white -2xl border border-gray-100 p-5">
+            @if ( $colocation->owner_id == auth()->user()->id )
+                   <div class="bg-white -2xl border border-gray-100 p-5">
 
                 <h3 class="font-semibold text-gray-800 text-sm mb-1">Inviter un membre</h3>
                 <p class="text-[11px] text-gray-400 mb-4">Ajoutez quelqu'un à votre colocation</p>
@@ -107,6 +107,9 @@
                     Ajouter une catégorie
                 </button>
             </div>
+            @endif
+         
+            
             <div class="bg-red-50 -2xl p-5 border border-red-200">
 
                 <h3 class="text-sm font-semibold text-red-900 mb-1">Zone de danger</h3>
