@@ -6,6 +6,7 @@ use App\Models\Colocation;
 use App\Http\Requests\StoreColocationRequest;
 use App\Http\Requests\UpdateColocationRequest;
 use App\Models\ColocationUser;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -91,9 +92,25 @@ class ColocationController extends Controller
      */
     public function leave(Colocation $colocation)
     {
-        ColocationUser::where('colocation_id', $colocation->id)
-            ->where('user_id', auth()->id())
-            ->update(['is_leave' => true]);
+        DB::transaction(function () use ($colocation) {
+
+            $membre = ColocationUser::where('colocation_id', $colocation->id)
+                ->where('user_id', auth()->id())
+                ->firstOrFail();
+            $membre->update(['is_leave' => true]);
+
+            $user = $membre->user;
+
+            $owner = User::find($colocation->owner_id);
+
+            if ($user->solde < 0) {
+                $owner->solde -= $user->solde;
+                $owner->save();
+            }
+            $user->solde = 0;
+            $user->save();
+        });
+
         return redirect()->route('colocations.index')->with('success', 'Vous avez quitté la colocation.');
     }
 
@@ -103,6 +120,13 @@ class ColocationController extends Controller
             abort(403);
         }
         $colocation->update(['status' => false]);
+        foreach ($colocation->colocationUsers as $membre) {
+            $membre->update(['is_leave' => true]);
+            $user = $membre->user;
+            $user->solde = 0;
+            $user->save();
+        }
+
         return redirect()->route('colocations.index')->with('success', 'vous avez annulé la colocation.');
     }
 }

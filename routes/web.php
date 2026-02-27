@@ -7,17 +7,17 @@ use App\Http\Controllers\InvetationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
- 
-Route::middleware('auth')->group(function () {
-    
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/', function () {
+        return view('dashboard');
+    });
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -34,14 +34,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/expenses/{expense}', [DepenseController::class, 'destroy'])->name('expenses.destroy');
 
     Route::post('/categories', [CategorieController::class, 'store'])->name('categories.store');
-    
+
     Route::post('/invitations', [InvetationController::class, 'store'])->name('invitations.store');
     Route::get('/invitations/{token}', [InvetationController::class, 'show'])->name('invitations.show');
     Route::post('/invitations/{token}', [InvetationController::class, 'accepter'])->name('invitations.accepter');
 
     Route::get('/admin', [ColocationController::class, 'stats'])->name('admin.stats');
     Route::get('/admins', [ColocationController::class, 'stats'])->name('admin.users');
-
 });
 
 
