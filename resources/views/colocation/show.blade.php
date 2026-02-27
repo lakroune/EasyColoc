@@ -21,7 +21,7 @@
                         actif</span>
                 </div>
                 <div class="flex-1 overflow-y-auto p-4 space-y-3">
-                    @foreach ($colocation->colocationUsers as $membre)
+                    @foreach ($membres as $membre)
                         <div class="p-3 bg-gray-50  flex items-center gap-3">
                             <img src="https://ui-avatars.com/api/?name={{ $membre->user->nom }} {{ $membre->user->prenom }}&background=0f4c4c&color=fff&size=40"
                                 class="w-10 h-10 -full">
@@ -53,14 +53,13 @@
                     </button>
                 </div>
                 <div class="flex-1 overflow-y-auto p-4 space-y-3">
-                    @if ($colocation->colocationUsers)
+                    @if ($depenses->isEmpty())
                         <div class="p-8 text-center text-gray-400 border-2 border-dashed border-gray-200 ">
                             <i class="fas fa-receipt text-2xl mb-2"></i>
                             <p class="text-xs">Aucune nouvelle dépense</p>
                         </div>
                     @else
-                        @foreach ($colocation->colocationUsers as $depense)
-                            )
+                        @foreach ($depenses as $depense)
                             <div class="p-3 bg-gray-50 ">
                                 <div class="flex justify-between items-start mb-1">
                                     <div class="flex items-center gap-2">
@@ -68,13 +67,19 @@
                                             <i class="fas fa-shopping-cart text-emerald-600 text-[10px]"></i>
                                         </div>
                                         <div>
-                                            <p class="text-xs font-medium text-gray-800">Courses</p>
-                                            <p class="text-[10px] text-gray-400">26 Fév 2026</p>
+                                            <P class="text-xs font-medium text-gray-800">
+                                                {{ $depense->categorie->nom_categorie }}</P>
+                                            <p class="text-[10px] text-gray-400">{{ $depense->titre }}</p>
+
                                         </div>
                                     </div>
-                                    <p class="text-sm font-semibold text-gray-800">45.50 €</p>
+                                    <p class=" text-sm font-semibold text-gray-800">{{ $depense->montant }}MAD</p>
                                 </div>
-                                <p class="text-[10px] text-gray-400">Payé par user2</p>
+                               <div class="flex justify-between items-center">
+                                 <p class="text-[10px] text-gray-400">Payé par {{ $depense->colocationUser->user->nom }}
+                                    {{ $depense->colocationUser->user->prenom }}</p>
+                                <p class="text-[10px] text-gray-400">{{ $depense->created_at->diffForHumans() }}</p>
+                               </div>
                             </div>
                         @endforeach
                     @endif
@@ -201,7 +206,7 @@
                     <input type="number" step="0.01" name="montant"
                         class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200  text-xs focus:outline-none focus:border-[#0f4c4c]"
                         placeholder="Montant *" required>
-                    <select name="categorie_id" required 
+                    <select name="categorie_id" required
                         class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200  text-xs focus:outline-none focus:border-[#0f4c4c]">
                         <option value="" disabled selected>Sélectionner une catégorie</option>
                         @foreach ($colocation->categories as $category)

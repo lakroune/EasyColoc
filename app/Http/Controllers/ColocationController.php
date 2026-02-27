@@ -58,10 +58,14 @@ class ColocationController extends Controller
      */
     public function show(Colocation $colocation)
     {
-        $colocation = Colocation::with(['colocationUsers.user', 'colocationUsers.depenses', 'categories'])->find($colocation->id);
-        return view('colocation.show', compact('colocation'));
+        $membres = $colocation->colocationUsers()->where('is_leave', false)->with('user')->get();
+        $categories = $colocation->categories()->get();
+        $depenses = [];
+        foreach ($membres as $membre) {
+            $depenses = $membre->depenses()->with(['categorie']) ->latest()->get();
+        }
+        return view('colocation.show', compact('colocation', 'membres', 'categories', 'depenses'));
     }
-
     /**
      * Show the form for editing the specified resource.
      */
