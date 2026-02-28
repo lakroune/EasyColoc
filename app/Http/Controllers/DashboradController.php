@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Colocation;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -25,19 +26,31 @@ class DashboradController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * stats
      */
-    public function create()
+    public function user()
     {
-        //
+        if (!auth()->user()->isAdmin())
+            return  back()->with('error', 'Vous ne pouvez pas voir les utilisateurs.');
+        $users = User::withCount('colocationUsers')->paginate(10);
+        return view('admin.users', compact('users'));
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Toggle the status of a user.
      */
-    public function store(Request $request)
+    public function toggleStatus(User $user)
     {
-        //
+        if (auth()->id() === $user->id || $user->isBanned() || $user->isAdmin()) {
+            return back()->with('error', 'Vous ne pouvez pas vous bannir vous-même.');
+        }
+        if (!auth()->user()->isAdmin())
+            return  back()->with('error', 'Vous ne pouvez pas bannir un administrateur.');
+        $user->is_banned = !$user->is_banned;
+        $user->save();
+
+        $message = $user->isBanned() ? 'activé' : 'banni';
+        return back()->with('success', "L'utilisateur a été $message avec succès.");
     }
 
     /**
