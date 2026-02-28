@@ -61,6 +61,8 @@ class ColocationController extends Controller
      */
     public function show(Colocation $colocation)
     {
+        if ($colocation->colocationUsers()->where('user_id', auth()->user()->id)->where('is_leave', false)->doesntExist())
+            return redirect()->route('dashboard')->with('error', 'vous n\'etes pas membre de cette colocation');
         $membres = $colocation->colocationUsers()->where('is_leave', false)->with('user')->get();
         $categories = $colocation->categories()->get();
         $depenses = collect();

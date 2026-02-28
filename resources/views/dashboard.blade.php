@@ -2,7 +2,8 @@
     <div class="flex justify-between items-center m-4">
         <div>
             <h1 class="text-xl font-semibold text-gray-800 uppercase tracking-tight">Tableau de bord</h1>
-            <p class="text-gray-400 text-xs mt-0.5 italic">Bienvenue, {{ Auth::user()->nom }} {{ Auth::user()->prenom }}</p>
+            <p class="text-gray-400 text-xs mt-0.5 italic">Bienvenue, {{ Auth::user()->nom }} {{ Auth::user()->prenom }}
+            </p>
         </div>
     </div>
 
@@ -23,9 +24,15 @@
                 <div class="flex-1 overflow-y-auto p-4 space-y-6 custom-scrollbar">
                     @forelse ($user->colocationUsers as $member)
                         <div class="bg-white -xl border border-gray-100 overflow-hidden shadow-sm">
-                            <div class="bg-gray-50/50 px-4 py-3 border-b border-gray-100 flex justify-between items-center">
-                                <span class="font-bold text-xs text-gray-700 uppercase tracking-wider">{{ $member->colocation->nom_coloc }}</span>
-                                <span class="text-[9px] {{ $member->is_owner ? 'border text-green-600  bg-green-50' :   ' bg-blue-50 text-blue-600' }}  px-2 py-0.5 -lg uppercase font-bold">
+                            <div
+                                class="bg-gray-50/50 px-4 py-3 border-b border-gray-100 flex justify-between items-center">
+                                <a href="{{ route('colocations.show', $member->colocation) }}"
+                                    class="flex items-center gap-3">
+                                    <span
+                                        class="font-bold text-xs text-gray-700 uppercase tracking-wider">{{ $member->colocation->nom_coloc }}</span>
+                                </a>
+                                <span
+                                    class="text-[9px] {{ $member->is_owner ? 'border text-green-600  bg-green-50' : ' bg-blue-50 text-blue-600' }}  px-2 py-0.5 -lg uppercase font-bold">
                                     {{ $member->is_owner ? 'Owner' : 'Membre' }}
                                 </span>
                             </div>
@@ -43,8 +50,10 @@
                                         @foreach ($member->depenses->take(5) as $depense)
                                             <tr class="hover:bg-gray-50/80 transition-colors">
                                                 <td class="px-4 py-3">
-                                                    <p class="text-xs font-semibold text-gray-800">{{ $depense->titre }}</p>
-                                                    <p class="text-[9px] text-gray-400">{{ $depense->created_at->diffForHumans() }}</p>
+                                                    <p class="text-xs font-semibold text-gray-800">{{ $depense->titre }}
+                                                    </p>
+                                                    <p class="text-[9px] text-gray-400">
+                                                        {{ $depense->created_at->diffForHumans() }}</p>
                                                 </td>
                                                 <td class="px-4 py-3">
                                                     <span class="px-2 py-0.5  bg-gray-100 text-gray-600 text-[9px]">
@@ -72,7 +81,7 @@
         </div>
 
         <div class="w-80 flex flex-col gap-4 h-full">
-            
+
             <div class="bg-white -2xl p-5 border border-gray-100 shadow-sm">
                 <div class="flex items-center justify-between mb-3">
                     <div class="w-10 h-10 bg-amber-100 -xl flex items-center justify-center">
@@ -97,8 +106,10 @@
 
             <div class="bg-white -2xl p-5 border border-gray-100 shadow-sm">
                 <div class="flex items-center justify-between mb-3">
-                    <div class="w-10 h-10 {{ $user->solde >= 0 ? 'bg-green-100' : 'bg-red-100' }} -xl flex items-center justify-center">
-                        <i class="fas fa-wallet {{ $user->solde >= 0 ? 'text-green-600' : 'text-red-600' }} text-xs"></i>
+                    <div
+                        class="w-10 h-10 {{ $user->solde >= 0 ? 'bg-green-100' : 'bg-red-100' }} -xl flex items-center justify-center">
+                        <i
+                            class="fas fa-wallet {{ $user->solde >= 0 ? 'text-green-600' : 'text-red-600' }} text-xs"></i>
                     </div>
                     <span class="text-[10px] uppercase tracking-wider text-gray-400 font-bold">Mon Solde</span>
                 </div>
@@ -115,13 +126,16 @@
         .custom-scrollbar::-webkit-scrollbar {
             width: 4px;
         }
+
         .custom-scrollbar::-webkit-scrollbar-track {
             background: transparent;
         }
+
         .custom-scrollbar::-webkit-scrollbar-thumb {
             background: #e2e8f0;
             border-radius: 10px;
         }
+
         .custom-scrollbar::-webkit-scrollbar-thumb:hover {
             background: #cbd5e1;
         }
