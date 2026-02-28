@@ -74,7 +74,7 @@ class ColocationController extends Controller
         }
 
         $membresIds = [];
-        foreach ($membres as $membre) {
+        foreach ($all_membres as $membre) {
             $membresIds[] = $membre->id;
         }
 
@@ -109,15 +109,39 @@ class ColocationController extends Controller
     public function leave(Colocation $colocation)
     {
         DB::transaction(function () use ($colocation) {
+
             $membre = ColocationUser::where('colocation_id', $colocation->id)
                 ->where('user_id', auth()->id())
                 ->firstOrFail();
+
             $membre->update(['is_leave' => true]);
+
             $user = $membre->user;
-            $owner = User::findOrFail($colocation->owner_id);
-            if ($user->solde < 0) {
-                $owner->solde += $user->solde;
+
+
+            $ownerColocUser = $colocation->colocationUsers()->where('is_owner', true)->first();
+
+            if (!$ownerColocUser) {
+                return back()->with('error', 'error');
+            }
+
+            $owner = $ownerColocUser->user;
+
+            $dettes_non_payees = Dette::where('colocation_user_id', $membre->id)
+                ->where('statut', false)
+                ->get();
+
+            $totalDette = 0;
+
+            foreach ($dettes_non_payees as $dette) {
+                $dette->update(['colocation_user_id' => $ownerColocUser->id]);
+                $totalDette += $dette->montant;
+            }
+
+            if ($user->solde < 0 || $totalDette > 0) {
+                $owner->solde -= $totalDette;
                 $owner->save();
+
                 $user->decrement('reputation');
             } else {
                 $user->increment('reputation');
