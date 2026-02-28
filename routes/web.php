@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ColocationController;
+use App\Http\Controllers\DashboradController;
 use App\Http\Controllers\DepenseController;
 use App\Http\Controllers\InvetationController;
 use App\Http\Controllers\ProfileController;
@@ -10,13 +11,9 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/', function () {
-        return view('dashboard');
-    });
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
 
+    Route::get('/dashboard', [DashboradController::class, 'index'])->name('dashboard');
+    Route::get('/', [DashboradController::class, 'index'])->name('dashboard');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

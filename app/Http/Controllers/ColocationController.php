@@ -94,14 +94,11 @@ class ColocationController extends Controller
     public function leave(Colocation $colocation)
     {
         DB::transaction(function () use ($colocation) {
-
             $membre = ColocationUser::where('colocation_id', $colocation->id)
                 ->where('user_id', auth()->id())
                 ->firstOrFail();
             $membre->update(['is_leave' => true]);
-
             $user = $membre->user;
-
             $owner = User::findOrFail($colocation->owner_id);
             if ($user->solde < 0) {
                 $owner->solde += $user->solde;
