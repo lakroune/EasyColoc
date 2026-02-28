@@ -39,11 +39,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/invitations/{token}', [InvetationController::class, 'show'])->name('invitations.show');
     Route::post('/invitations/{token}', [InvetationController::class, 'accepter'])->name('invitations.accepter');
     Route::post('/invitation', [InvetationController::class, 'join'])->name('invitations.join');
+});
 
+
+Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/stats', [DashboradController::class, 'stats'])->name('admin.stats');
     Route::get('/admin/users', [DashboradController::class, 'user'])->name('admin.users');
     Route::patch('/admin/users/{user}/toggle', [DashboradController::class, 'toggleStatus'])->name('admin.users.toggle-status');
 });
-
-
 require __DIR__ . '/auth.php';
