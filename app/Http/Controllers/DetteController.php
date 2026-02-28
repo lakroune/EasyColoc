@@ -52,7 +52,16 @@ class DetteController extends Controller
      */
     public function update(Request $request, Dette $dette)
     {
-        //
+        if ($dette->colocation_user_id !== auth()->user()->id) {
+            return redirect()->back()->with('error', 'Vous n\'êtes pas autorisé à marquer cette dette comme payée.');
+        }
+        $det = Dette::findOrFail($dette->id);
+        $det->statut = true;
+        $det->save();
+        $user = $det->colocationUser->user;
+        $user->solde -= $det->montant;
+        $user->save();
+        return redirect()->back()->with('success', 'Dette marquée comme payée.');
     }
 
     /**

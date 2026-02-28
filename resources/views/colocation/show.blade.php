@@ -103,17 +103,15 @@
                 @forelse ($dettes as $dette)
                     <div class="p-3 bg-red-50 border border-red-100 flex justify-between items-center">
                         <div>
-                            <p class="text-xs font-bold text-red-900">
+                            <p class="text-[10px] font-bold text-red-900">
                                 {{ $dette->colocationUser->user->nom }}
-                                {{ $dette->colocationUser->user->prenom }}
 
                                 <span class="font-normal text-gray-600">doit</span>
 
                                 {{ $dette->depense->colocationUser->user->nom }}
-                                {{ $dette->depense->colocationUser->user->prenom }}
                             </p>
 
-                            <p class="text-sm font-semibold text-red-700">
+                            <p class="text-[10px] font-semibold text-red-700">
                                 {{ number_format($dette->montant, 2) }} MAD
                             </p>
                         </div>
@@ -123,7 +121,7 @@
                             @method('PUT')
                             <button type="submit"
                                 class="text-[10px] bg-emerald-600 text-white px-3 py-1.5 font-semibold hover:bg-emerald-700 transition">
-                                Marquer payé
+                                Marquer
                             </button>
                         </form>
                     </div>
