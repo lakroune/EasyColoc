@@ -186,6 +186,7 @@
             </div>
             <form action="{{ route('invitations.store') }}" method="POST" class="space-y-3">
                 @csrf
+                @method('POST')
                 <input type="hidden" name="colocation_id" value="{{ $colocation->id }}">
                 <input type="email" name="email"
                     class="w-full px-3 py-2.5 bg-gray-50 border border-gray-200 text-xs focus:outline-none focus:border-[#0f4c4c]"

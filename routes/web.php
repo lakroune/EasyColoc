@@ -38,6 +38,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/invitations', [InvetationController::class, 'store'])->name('invitations.store');
     Route::get('/invitations/{token}', [InvetationController::class, 'show'])->name('invitations.show');
     Route::post('/invitations/{token}', [InvetationController::class, 'accepter'])->name('invitations.accepter');
+    Route::post('/invitation', [InvetationController::class, 'join'])->name('invitations.join');
 
     Route::get('/admin', [ColocationController::class, 'stats'])->name('admin.stats');
     Route::get('/admins', [ColocationController::class, 'stats'])->name('admin.users');

@@ -11,6 +11,7 @@ use App\Models\ColocationUser;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\Request;
 
 class InvetationController extends Controller
 {
@@ -36,10 +37,10 @@ class InvetationController extends Controller
     public function store(StoreInvetationRequest $request)
     {
         $data = $request->validated();
-        $data['token'] = Str::random(32);
+        $data['token'] = Str::random(10);
         $invetation = Invetation::create($data);
         Mail::to($data['email'])->send(new InvitationMail($invetation));
-        return back()->with('success', 'Invitation envoyée avec succès');
+        return back()->with('success', $invetation->token);
     }
 
     /**
@@ -59,10 +60,14 @@ class InvetationController extends Controller
      */
     public function accepter($token)
     {
-        if (!auth()->check()) abort(403);
-
         $invitation = Invetation::where('token', $token)->firstOrFail();
+        if (!auth()->check()) {
+            return redirect()->route('register')->with('error', 'Vous devez vous connecter.');
+        }
 
+        if (auth()->user()->email !== $invitation->email) {
+            abort(403, 'Cette invitation ne vous est pas destinée.');
+        }
         $dans_coloc = auth()->user()->colocationUsers()
             ->where('is_leave', false) // dans la colocation
             ->whereHas('colocation', function ($query) {
@@ -87,5 +92,18 @@ class InvetationController extends Controller
 
         return redirect()->route('colocations.show', $invitation->colocation_id)
             ->with('success', 'Bienvenue dans votre nouvelle colocation');
+    }
+
+    public function join(Request $request)
+    {
+
+        $data =  $request->validate([
+            'token' => 'required|string|exists:invetations,token',
+        ], [
+            'token.exists' => 'Ce token n\'existe pas',
+        ]);
+
+        $this->accepter($data['token']);
+        return back()->with('success', 'vous avez rejoint la colocation');
     }
 }

@@ -2,11 +2,19 @@
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h1 class="text-xl font-semibold text-gray-800">MES COLOCATIONS</h1>
-            <button onclick="openModal('createModal')"
-                class="px-4 py-2 bg-indigo-600 text-white -xl text-xs font-medium flex items-center gap-2">
-                <i class="fas fa-plus"></i>
-                Nouvelle colocation
-            </button>
+
+            <div class="flex gap-2   ">
+               <button onclick="openModal('joinModal')"
+                    class="px-4 py-2 bg-emerald-600 text-white -xl text-xs font-medium flex items-center gap-2">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Rejoindre une colocation
+                </button>
+                <button onclick="openModal('createModal')"
+                    class="px-4 py-2 bg-indigo-600 text-white -xl text-xs font-medium flex items-center gap-2">
+                    <i class="fas fa-plus"></i>
+                    Nouvelle colocation
+                </button>
+            </div>
         </div>
     </x-slot>
 
@@ -15,7 +23,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             @foreach ($colocations as $coloc)
                 <div
-                    class=" border border-gray-200 p-5 transition {{ !$coloc->status || $coloc->colocationUsers->where('user_id', auth()->id())->first()->is_leave  ? 'opacity-60 bg-gray-50 cursor-not-allowed' : 'bg-white   cursor-pointer' }}">
+                    class=" border border-gray-200 p-5 transition {{ !$coloc->status || $coloc->colocationUsers->where('user_id', auth()->id())->first()->is_leave ? 'opacity-60 bg-gray-50 cursor-not-allowed' : 'bg-white   cursor-pointer' }}">
 
                     <div class="flex justify-between items-start mb-4">
                         <div
@@ -42,12 +50,12 @@
 
                     <div class="flex justify-between items-center pt-4 border-t border-gray-100">
                         <div>
-                            <p class="text-[10px] text-gray-400 uppercase">Dépenses</p>
-                            <p class="text-sm font-medium text-gray-800">{{ $coloc->depenses_count ?? 0 }}</p>
+                            <p class="text-[10px] text-gray-400 uppercase"></p>
+                            <p class="text-sm font-medium text-gray-800"></p>
                         </div>
 
                         <div
-                            class="w-8 h-8 {{ $coloc->status ? 'bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white' : 'bg-gray-100 text-gray-400' }} rounded-lg flex items-center justify-center transition">
+                            class="w-8 h-8 {{ $coloc->status ? 'bg-indigo-50 text-indigo-600 hover:bg-indigo-600 hover:text-white' : 'bg-gray-100 text-gray-400' }}   flex items-center justify-center transition">
                             @if ($coloc->status && !$coloc->colocationUsers->where('user_id', auth()->id())->first()->is_leave)
                                 <a href="{{ route('colocations.show', $coloc->id) }}">
                                     <i class="fas fa-arrow-right text-xs"></i>
@@ -72,11 +80,12 @@
 
     <div id="createModal"
         class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
-        <div class="bg-white -2xl max-w-md w-full p-6">
+        <div class="bg-white  max-w-md w-full p-6">
             <div class="flex justify-between items-center mb-4">
                 <h3 class="font-semibold text-gray-800">Nouvelle colocation</h3>
                 <button onclick="closeModal('createModal')" class="text-gray-400 hover:text-gray-600">✕</button>
             </div>
+
             <form action=" {{ route('colocations.store') }}" method="POST" class="space-y-4">
                 @csrf
                 <div>
@@ -93,7 +102,34 @@
             </form>
         </div>
     </div>
+    <div id="joinModal"
+        class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
+        <div class="bg-white   max-w-md w-full p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="font-semibold text-gray-800">Rejoindre une colocation</h3>
+                <button onclick="closeModal('joinModal')" class="text-gray-400 hover:text-gray-600">✕</button>
+            </div>
 
+            <p class="text-[11px] text-gray-500 mb-4">Entrez le code d'invitation que vous avez reçu pour rejoindre vos
+                colocataires.</p>
+
+            <form action="{{ route('invitations.join') }}" method="POST" class="space-y-4">
+                @csrf
+                @method('POST')
+                <div>
+                    <label class="block text-xs text-gray-600 mb-1">Code d'invitation</label>
+                    <input type="text" name="token" required
+                        class="w-full px-3 py-2 border border-gray-200 text-sm focus:outline-none focus:border-indigo-500 uppercase font-mono tracking-widest"
+                        placeholder="Ex: ABC123XYZ">
+                </div>
+
+                <button type="submit"
+                    class="w-full py-2.5 bg-emerald-600 text-white text-sm font-medium hover:bg-emerald-700 transition">
+                    Rejoindre maintenant
+                </button>
+            </form>
+        </div>
+    </div>
     <script>
         function openModal(id) {
             document.getElementById(id).classList.remove('hidden');
