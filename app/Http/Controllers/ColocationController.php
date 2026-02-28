@@ -108,47 +108,46 @@ class ColocationController extends Controller
      */
     public function leave(Colocation $colocation)
     {
-        DB::transaction(function () use ($colocation) {
+        // DB::transaction(function () use ($colocation) {
 
-            $membre = ColocationUser::where('colocation_id', $colocation->id)
-                ->where('user_id', auth()->id())
-                ->firstOrFail();
+        $membre = ColocationUser::where('colocation_id', $colocation->id)
+            ->where('user_id', auth()->id())
+            ->firstOrFail();
 
-            $membre->update(['is_leave' => true]);
+        $membre->update(['is_leave' => true]);
 
-            $user = $membre->user;
+        $user = $membre->user;
 
 
-            $ownerColocUser = $colocation->colocationUsers()->where('is_owner', true)->first();
+        $ownerColocUser = $colocation->colocationUsers()->where('is_owner', true)->first();
 
-            if (!$ownerColocUser) {
-                return back()->with('error', 'error');
-            }
+        // if (!$ownerColocUser) {
+        //     return back()->with('error', 'error');
+        // }
 
-            $owner = $ownerColocUser->user;
+        $owner = $ownerColocUser->user;
 
-            $dettes_non_payees = Dette::where('colocation_user_id', $membre->id)
-                ->where('statut', false)
-                ->get();
+        $dettes_non_payees = Dette::where('colocation_user_id', $membre->id)  
+            ->get();
+        return  $dettes_non_payees;
+        $totalDette = 0;
 
-            $totalDette = 0;
+        foreach ($dettes_non_payees as $dette) {
+            $dette->update(['colocation_user_id' => $ownerColocUser->id]);
+            $totalDette += $dette->montant;
+        }
 
-            foreach ($dettes_non_payees as $dette) {
-                $dette->update(['colocation_user_id' => $ownerColocUser->id]);
-                $totalDette += $dette->montant;
-            }
+        if ($user->solde < 0 || $totalDette > 0) {
+            $owner->solde -= $totalDette;
+            $owner->save();
 
-            if ($user->solde < 0 || $totalDette > 0) {
-                $owner->solde -= $totalDette;
-                $owner->save();
-
-                $user->decrement('reputation');
-            } else {
-                $user->increment('reputation');
-            }
-            $user->solde = 0;
-            $user->save();
-        });
+            $user->decrement('reputation');
+        } else {
+            $user->increment('reputation');
+        }
+        $user->solde = 0;
+        $user->save();
+        // });
 
         return redirect()->route('colocations.index')->with('success', 'Vous avez quitté la colocation.');
     }

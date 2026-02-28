@@ -78,10 +78,10 @@ class InvetationController extends Controller
             ColocationUser::updateOrCreate([
                 'colocation_id' => $invitation->colocation_id,
                 'user_id' => auth()->id(),
+            ], [
                 'is_owner' => false,
-                'is_leave' => false
+                'is_leave' => false,
             ]);
-
             $invitation->delete();
         });
 

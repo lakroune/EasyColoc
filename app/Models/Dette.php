@@ -25,11 +25,5 @@ class Dette extends Model
     {
         return $this->belongsTo(Depense::class);
     }
-    public function marquerPaiement()
-    {
-        $this->update([
-            'statut_dette' => true,
-            'date_paiement' => now(),
-        ]);
-    }
+    
 }
