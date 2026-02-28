@@ -25,6 +25,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/colocations/{colocation}', [ColocationController::class, 'show'])->name('colocations.show');
     Route::delete('/colocations/{colocation}', [ColocationController::class, 'destroy'])->name('colocations.destroy');
     Route::put('/colocations/{colocation}', [ColocationController::class, 'leave'])->name('colocations.leave');
+    Route::put('/colocations/{colocation}/change-owner/{membre}', [ColocationController::class, 'changeOwner'])->name('colocations.changeOwner');
+    Route::delete('/colocations/{colocation}/kick/{membre}', [ColocationController::class, 'kickMember'])->name('colocations.kickMember');
 
     Route::get('/expenses', [DepenseController::class, 'index'])->name('expenses.index');
     Route::post('/expenses', [DepenseController::class, 'store'])->name('expenses.store');

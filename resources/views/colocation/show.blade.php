@@ -24,13 +24,15 @@
             </div>
             <div class="flex-1 overflow-y-auto p-4 space-y-3">
                 @foreach ($membres as $membre)
-                    <div class="p-3 bg-gray-50 flex items-center gap-3">
+                    <div class=" bg-gray-50 flex items-center gap-3 relative group">
                         <img src="https://ui-avatars.com/api/?name={{ $membre->user->nom }} {{ $membre->user->prenom }}&background=0f4c4c&color=fff&size=40"
                             class="w-10 h-10">
+
                         <div class="flex-1">
                             <div class="flex items-center gap-2">
-                                <p class="text-xs font-medium text-gray-800">{{ $membre->user->nom }}
-                                    {{ $membre->user->prenom }}</p>
+                                <p class="text-xs font-medium text-gray-800">
+                                    {{ $membre->user->nom }} {{ $membre->user->prenom }}
+                                </p>
                                 <span
                                     class="px-1.5 py-0.5 {{ $membre->is_owner ? 'bg-[#851313]' : 'bg-[#0f4c4c]' }} text-white text-[10px]">
                                     {{ $membre->is_owner ? 'owner' : 'membre' }}
@@ -38,12 +40,42 @@
                             </div>
                             <p class="text-[11px] text-gray-400">{{ $membre->user->email }}</p>
                         </div>
-                        <div class="text-right">
-                            <p
-                                class="text-sm font-semibold {{ $membre->user->reputation >= 0 ? 'text-emerald-600' : 'text-red-600' }}">
-                                {{ $membre->user->reputation }}
-                            </p>
-                            <i class="fas fa-{{ $membre->user->reputation >= 0 ? '' : '' }} text-[10px] "></i>
+
+                        <div class="flex items-center gap-2">
+                            @if (auth()->user()->colocationUsers()->where('colocation_id', $colocation->id)->where('is_owner', true)->exists() &&
+                                    auth()->id() !== $membre->user_id &&
+                                    !$membre->is_owner)
+                                <form action="{{ route('colocations.changeOwner', [$colocation->id, $membre->id]) }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Voulez-vous donner le rôle d\'owner à ce membre ?')">
+                                    @csrf
+                                    @method('PUT')
+                                    <button type="submit"
+                                        class=" text-blue-600 hover:bg-blue-50  "
+                                        title="Rendre Owner">
+                                        <i class="fas fa-crown text-[10px]"></i>
+                                    </button>
+                                </form>
+
+                                <form action="{{ route('colocations.kickMember', [$colocation->id, $membre->id]) }}"
+                                    method="POST"
+                                    onsubmit="return confirm('Voulez-vous vraiment expulser ce membre ?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                        class=" text-red-600 hover:bg-red-50  transition   "
+                                        title="Expulser">
+                                        <i class="fas fa-user-minus text-[10px]"></i>
+                                    </button>
+                                </form>
+                            @endif
+
+                            <div class="text-right ml-2">
+                                <p
+                                    class="text-sm font-semibold {{ $membre->user->reputation >= 0 ? 'text-emerald-600' : 'text-red-600' }}">
+                                    {{ $membre->user->reputation }}
+                                </p>
+                            </div>
                         </div>
                     </div>
                 @endforeach

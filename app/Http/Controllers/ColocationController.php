@@ -53,7 +53,7 @@ class ColocationController extends Controller
                 'is_leave' => false
             ]);
         });
-        return back()->with('success', 'Colocation ajoutée avec succès');
+        return back()->with('success', 'vous avez cree une colocation');
     }
 
     /**
@@ -108,46 +108,47 @@ class ColocationController extends Controller
      */
     public function leave(Colocation $colocation)
     {
-        // DB::transaction(function () use ($colocation) {
+        DB::transaction(function () use ($colocation) {
 
-        $membre = ColocationUser::where('colocation_id', $colocation->id)
-            ->where('user_id', auth()->id())
-            ->firstOrFail();
+            $membre = ColocationUser::where('colocation_id', $colocation->id)
+                ->where('user_id', auth()->id())
+                ->firstOrFail();
 
-        $membre->update(['is_leave' => true]);
+            $membre->update(['is_leave' => true]);
 
-        $user = $membre->user;
+            $user = $membre->user;
 
 
-        $ownerColocUser = $colocation->colocationUsers()->where('is_owner', true)->first();
+            $ownerColocUser = $colocation->colocationUsers()->where('is_owner', true)->first();
 
-        // if (!$ownerColocUser) {
-        //     return back()->with('error', 'error');
-        // }
+            if (!$ownerColocUser) {
+                return back()->with('error', 'error');
+            }
 
-        $owner = $ownerColocUser->user;
+            $owner = $ownerColocUser->user;
 
-        $dettes_non_payees = Dette::where('colocation_user_id', $membre->id)  
-            ->get();
-        return  $dettes_non_payees;
-        $totalDette = 0;
+            $dettes_non_payees = Dette::where('colocation_user_id', $membre->id)
+                ->get();
 
-        foreach ($dettes_non_payees as $dette) {
-            $dette->update(['colocation_user_id' => $ownerColocUser->id]);
-            $totalDette += $dette->montant;
-        }
+            // return  $dettes_non_payees;
+            $totalDette = 0;
 
-        if ($user->solde < 0 || $totalDette > 0) {
-            $owner->solde -= $totalDette;
-            $owner->save();
+            foreach ($dettes_non_payees as $dette) {
+                $dette->update(['colocation_user_id' => $ownerColocUser->id]);
+                $totalDette += $dette->montant;
+            }
 
-            $user->decrement('reputation');
-        } else {
-            $user->increment('reputation');
-        }
-        $user->solde = 0;
-        $user->save();
-        // });
+            if ($user->solde < 0 || $totalDette > 0) {
+                $owner->solde -= $totalDette;
+                $owner->save();
+
+                $user->decrement('reputation');
+            } else {
+                $user->increment('reputation');
+            }
+            $user->solde = 0;
+            $user->save();
+        });
 
         return redirect()->route('colocations.index')->with('success', 'Vous avez quitté la colocation.');
     }
@@ -167,4 +168,62 @@ class ColocationController extends Controller
 
         return redirect()->route('colocations.index')->with('success', 'vous avez annulé la colocation.');
     }
+
+    /**
+     * Expulse un membre de la colocation
+     *
+     * @param Colocation $colocation
+     * @param ColocationUser $membre
+     * @return void
+     */
+    public function kickMember(Colocation $colocation, ColocationUser $membre)
+    {
+        $ownerColocUser = $colocation->colocationUsers()->where('is_owner', true)->first();
+
+        if (!$ownerColocUser || auth()->id() !== $ownerColocUser->user_id) {
+            abort(403, 'Seul l\'owner peut expulser un membre.');
+        }
+
+        if ($membre->user_id === auth()->id()) {
+            return back()->with('error', 'Vous ne pouvez pas vous expulser vous-même.');
+        }
+
+        DB::transaction(function () use ($colocation, $membre, $ownerColocUser) {
+            $membre->update(['is_leave' => true]);
+
+            $user = $membre->user;
+            $owner = $ownerColocUser->user;
+
+            $dettes_non_payees = Dette::where('colocation_user_id', $membre->id)
+                ->where('statut', false)
+                ->get();
+
+            $totalDette = 0;
+            foreach ($dettes_non_payees as $dette) {
+                $dette->update(['colocation_user_id' => $ownerColocUser->id]);
+                $totalDette += $dette->montant;
+            }
+
+            if ($user->solde < 0 || $totalDette > 0) {
+                $owner->solde -= $totalDette;
+                $owner->save();
+                $user->decrement('reputation');
+            } else {
+                $user->increment('reputation');
+            }
+
+            $user->solde = 0;
+            $user->save();
+        });
+
+        return back()->with('success', 'Membre expulsé avec success.');
+    }
+
+    /**
+     * Transfert le rôle d'owner
+     * 
+     * 
+     */
+
+  
 }
