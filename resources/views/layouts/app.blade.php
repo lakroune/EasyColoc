@@ -18,7 +18,6 @@
             background-color: #f8fafc;
         }
 
-        /* التأكد من أن القائمة الجانبية تعمل بشكل متجاوب */
         .sidebar {
             transition: all 0.3s;
         }

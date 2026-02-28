@@ -14,8 +14,14 @@ class DashboradController extends Controller
      */
     public function index()
     {
-         $user=User::with('colocationUsers.depenses','colocationUsers.colocation')->find(auth()->user()->id);
-        return  view("dashboard",compact("user"));
+        $user = User::with(['colocationUsers.depenses' => function ($query) {
+            $query->latest(); // trier par date décroissante
+        }, 'colocationUsers.colocation'], 'colocationUsers.depenses.categorie')->find(auth()->id());
+
+        $total_depenses = $user->colocationUsers->sum(function ($membre) {
+            return $membre->depenses->sum('montant');
+        });
+        return view("dashboard", compact("user", "total_depenses"));
     }
 
     /**
