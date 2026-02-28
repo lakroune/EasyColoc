@@ -1,0 +1,33 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration
+{
+    /**
+     * Run the migrations.
+     */
+    public function up(): void
+    {
+        Schema::create('dettes', function (Blueprint $table) {
+           $table->id();
+            $table->foreignId('depense_id')->constrained('depenses')->onDelete('cascade');
+            $table->foreignId('colocation_user_id')->constrained('colocation_users')->onDelete('cascade');
+            
+            $table->float('montant_a_payer');
+            $table->dateTime('date_paiement')->nullable();
+            $table->boolean('statut_dette')->default(false); 
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('dettes');
+    }
+};

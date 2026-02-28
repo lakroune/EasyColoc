@@ -26,4 +26,9 @@ class Depense extends Model
     {
         return $this->belongsTo(Categorie::class);
     }
+
+    public function dettes()
+    {
+        return $this->hasMany(Dette::class);
+    }
 }

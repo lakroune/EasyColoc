@@ -30,4 +30,9 @@ class ColocationUser extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function dette()
+    {
+        return $this->hasMany(Dette::class);
+    }
 }
