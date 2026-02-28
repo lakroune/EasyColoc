@@ -26,7 +26,7 @@
                         <div class="flex gap-2">
                             <span class="px-2 py-1 bg-amber-100 text-amber-700 text-[10px] font-medium ">
 
-                                {{ $coloc->owner_id == auth()->id() ? 'OWNER' : 'MEMBRE' }}
+                                {{ $coloc->colocationUsers->where('user_id', auth()->id())->first()->is_owner ? 'OWNER' : 'MEMBRE' }}
                             </span>
 
                             <span
