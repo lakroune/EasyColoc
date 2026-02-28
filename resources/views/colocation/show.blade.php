@@ -101,29 +101,37 @@
             </div>
             <div class="flex-1 overflow-y-auto p-4 space-y-3">
                 @forelse ($dettes as $dette)
-                    <div class="p-3 bg-red-50 border border-red-100 flex justify-between items-center">
+                    <div
+                        class="p-3 {{ $dette->statut ? 'bg-emerald-50 border border-emerald-100' : ' bg-red-50 border border-red-100' }} flex justify-between items-center">
                         <div>
-                            <p class="text-[10px] font-bold text-red-900">
+                            <p class="text-[10px] font-bold text-gray-900">
                                 {{ $dette->colocationUser->user->nom }}
 
-                                <span class="font-normal text-gray-600">doit</span>
+                                <span class="font-normal text-black-600">doit</span>
 
                                 {{ $dette->depense->colocationUser->user->nom }}
                             </p>
 
-                            <p class="text-[10px] font-semibold text-red-700">
+                            <p
+                                class="text-[10px] font-semibold {{ $dette->statut ? 'text-emerald-600' : 'text-red-600' }}">
                                 {{ number_format($dette->montant, 2) }} MAD
                             </p>
                         </div>
 
-                        <form action="{{ route('dettes.update', $dette->id) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <button type="submit"
-                                class="text-[10px] bg-emerald-600 text-white px-3 py-1.5 font-semibold hover:bg-emerald-700 transition">
-                                Marquer
-                            </button>
-                        </form>
+                        @if ($dette->statut == false and $dette->colocationUser->user_id === auth()->user()->id)
+                            <form action="{{ route('dettes.update', $dette->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <button type="submit"
+                                    class="text-[10px] bg-emerald-600 text-white px-3 py-1.5 font-semibold hover:bg-emerald-700 transition">
+                                    Marquer
+                                </button>
+                            </form>
+                        @elseif($dette->statut == true)
+                            <span class="text-[10px] font-semibold ">
+                                <i class="fas fa-check text-emerald-600"></i>
+                            </span>
+                        @endif
                     </div>
                 @empty
                     <div class="p-8 text-center text-gray-400 border-2 border-dashed border-gray-200">

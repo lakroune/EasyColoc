@@ -52,18 +52,25 @@ class DetteController extends Controller
      */
     public function update(Request $request, Dette $dette)
     {
-        if ($dette->colocation_user_id !== auth()->user()->id) {
+        if (!$dette->colocationUser || $dette->colocationUser->user_id !== auth()->id()) {
             return redirect()->back()->with('error', 'Vous n\'êtes pas autorisé à marquer cette dette comme payée.');
         }
-        $det = Dette::findOrFail($dette->id);
-        $det->statut = true;
-        $det->save();
-        $user = $det->colocationUser->user;
-        $user->solde -= $det->montant;
-        $user->save();
-        return redirect()->back()->with('success', 'Dette marquée comme payée.');
-    }
 
+        $dette->statut = true;
+        $dette->date_paiement = now();
+        $dette->save();
+
+
+        $debteur = $dette->colocationUser->user;
+        $debteur->solde += $dette->montant;
+        $debteur->save();
+
+        $crediteur = $dette->depense->colocationUser->user;
+        $crediteur->solde -= $dette->montant;
+        $crediteur->save();
+
+        return redirect()->back()->with('success', 'Dette marquée comme payée ');
+    }
     /**
      * Remove the specified resource from storage.
      */

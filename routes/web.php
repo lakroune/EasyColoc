@@ -29,7 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/expenses', [DepenseController::class, 'index'])->name('expenses.index');
     Route::post('/expenses', [DepenseController::class, 'store'])->name('expenses.store');
     Route::delete('/expenses/{expense}', [DepenseController::class, 'destroy'])->name('expenses.destroy');
-    Route::put('dettes', [DetteController::class, 'update'])->name('dettes.update');
+    Route::put('/dettes/{dette}', [DetteController::class, 'update'])->name('dettes.update');
 
     Route::post('/categories', [CategorieController::class, 'store'])->name('categories.store');
 
