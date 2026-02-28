@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Colocation;
 use App\Http\Requests\StoreColocationRequest;
-use App\Http\Requests\UpdateColocationRequest;
 use App\Models\ColocationUser;
 use App\Models\Dette;
-use App\Models\User;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class ColocationController extends Controller
 {
@@ -25,14 +22,7 @@ class ColocationController extends Controller
             ->get();
         return  view('colocation.index', compact('colocations'));
     }
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
+  
     /**
      * Store a newly created resource in storage.
      */
@@ -85,21 +75,7 @@ class ColocationController extends Controller
         $depenses = $depenses->sortByDesc('created_at');
         return   view('colocation.show', compact('colocation', 'membres', 'categories', 'depenses', 'dettes'));
     }
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Colocation $colocation)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(UpdateColocationRequest $request, Colocation $colocation)
-    {
-        //
-    }
+ 
 
 
     /**
