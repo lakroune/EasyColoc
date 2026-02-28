@@ -6,6 +6,7 @@ use App\Models\Depense;
 use App\Http\Requests\StoreDepenseRequest;
 use App\Http\Requests\UpdateDepenseRequest;
 use App\Models\ColocationUser;
+use App\Models\Dette;
 use Illuminate\Support\Facades\DB;
 
 class DepenseController extends Controller
@@ -46,6 +47,12 @@ class DepenseController extends Controller
                     $membre->user->solde +=  $data['montant'] - ($data['montant'] / (count($membres)));
                 } else {
                     $membre->user->solde -=   ($data['montant'] / (count($membres)));
+                    Dette::create([
+                        'depense_id' => $depense->id,
+                        'colocation_user_id' => $membre->id,
+                        'montant' => $data['montant'] / (count($membres)),
+                        'statut' => false, // false = non payé
+                    ]);
                 }
                 $membre->user->save();
             }

@@ -13,10 +13,14 @@
         <div class="flex-1 bg-white border border-gray-100 flex flex-col h-full">
             <div class="p-4 border-b border-gray-100 flex justify-between items-center">
                 <h2 class="font-semibold text-gray-800 text-sm">Membres</h2>
-                <button onclick="openModal('inviteModal')"
-                    class="w-7 h-7 bg-[#0f4c4c] text-white flex items-center justify-center text-xs">
-                    <i class="fas fa-user-plus"></i>
+
+                <button onclick="openModal('adminModal')"
+                    class="w-7 h-7 bg-white text-gray-500 border border-gray-200 flex items-center justify-center text-xs hover:border-gray-300">
+                    <i class="fas fa-cog"></i>
                 </button>
+
+
+
             </div>
             <div class="flex-1 overflow-y-auto p-4 space-y-3">
                 @foreach ($membres as $membre)
@@ -36,7 +40,7 @@
                         </div>
                         <div class="text-right">
                             <p
-                                class="text-sm font-semibold {{ $membre->user->solde >= 0 ? 'text-emerald-600' : 'text-red-600' }}">
+                                class="text-sm font-semibold {{ $membre->user->reputation >= 0 ? 'text-emerald-600' : 'text-red-600' }}">
                                 {{ $membre->user->reputation }}
                             </p>
                             <i class="fas fa-{{ $membre->user->reputation >= 0 ? '' : '' }} text-[10px] "></i>
@@ -93,32 +97,42 @@
         <div class="flex-1 bg-white border border-gray-100 flex flex-col h-full">
             <div class="p-4 border-b border-gray-100 flex justify-between items-center">
                 <h2 class="font-semibold text-gray-800 text-sm">Qui doit à qui</h2>
-                @if ($colocation->owner_id == auth()->user()->id)
-                    <button onclick="openModal('adminModal')"
-                        class="w-7 h-7 bg-white text-gray-500 border border-gray-200 flex items-center justify-center text-xs hover:border-gray-300">
-                        <i class="fas fa-cog"></i>
-                    </button>
-                @endif
+
             </div>
             <div class="flex-1 overflow-y-auto p-4 space-y-3">
-                <div class="p-3 bg-red-50 border border-red-100 flex justify-between items-center">
-                    <div>
-                        <p class="text-xs font-bold text-red-900">
-                            Said
-                            <span class="font-normal text-gray-600">doit</span>
-                            Ahmed
-                        </p>
-                        <p class="text-sm font-semibold text-red-700">50.00 MAD</p>
-                    </div>
+                @forelse ($dettes as $dette)
+                    <div class="p-3 bg-red-50 border border-red-100 flex justify-between items-center">
+                        <div>
+                            <p class="text-xs font-bold text-red-900">
+                                {{ $dette->colocationUser->user->nom }}
+                                {{ $dette->colocationUser->user->prenom }}
 
-                    <form action="#" method="POST">
-                        @csrf
-                        <button type="submit"
-                            class="text-[10px] bg-emerald-600 text-white px-3 py-1.5 font-semibold hover:bg-emerald-700 transition">
-                            Marquer payé
-                        </button>
-                    </form>
-                </div>
+                                <span class="font-normal text-gray-600">doit</span>
+
+                                {{ $dette->depense->colocationUser->user->nom }}
+                                {{ $dette->depense->colocationUser->user->prenom }}
+                            </p>
+
+                            <p class="text-sm font-semibold text-red-700">
+                                {{ number_format($dette->montant, 2) }} MAD
+                            </p>
+                        </div>
+
+                        <form action="{{ route('dettes.update', $dette->id) }}" method="POST">
+                            @csrf
+                            @method('PUT')
+                            <button type="submit"
+                                class="text-[10px] bg-emerald-600 text-white px-3 py-1.5 font-semibold hover:bg-emerald-700 transition">
+                                Marquer payé
+                            </button>
+                        </form>
+                    </div>
+                @empty
+                    <div class="p-8 text-center text-gray-400 border-2 border-dashed border-gray-200">
+                        <i class="fas fa-receipt text-2xl mb-2"></i>
+                        <p class="text-xs">Aucune nouvelle dette</p>
+                    </div>
+                @endforelse
             </div>
         </div>
 
@@ -151,12 +165,16 @@
         class="fixed inset-0 bg-black/50 z-50 hidden flex items-center justify-center p-4 backdrop-blur-sm">
         <div class="bg-white max-w-sm w-full p-5">
             <div class="flex justify-between items-center mb-4">
-                <h3 class="font-semibold text-gray-800 text-sm">Administration</h3>
+                <h3 class="font-semibold text-gray-800 text-sm">Options</h3>
                 <button onclick="closeModal('adminModal')" class="text-gray-400 hover:text-gray-600">✕</button>
             </div>
 
             <div class="space-y-3">
                 @if ($colocation->owner_id == auth()->user()->id)
+                    <button onclick="openModal('inviteModal'); closeModal('adminModal');"
+                        class="w-full py-2.5 bg-[#0f4c4c] text-white border border-[#0f4c4c] text-xs font-medium hover:bg-[#0f4c4c]/90 transition">
+                        <i class="fas fa-user-plus mr-1"></i> Inviter un membre
+                    </button>
                     <button onclick="openModal('categoryModal'); closeModal('adminModal');"
                         class="w-full py-2.5 bg-white text-[#0f4c4c] border border-[#0f4c4c] text-xs font-medium hover:bg-gray-50 transition">
                         <i class="fas fa-tags mr-1"></i> Gérer catégories

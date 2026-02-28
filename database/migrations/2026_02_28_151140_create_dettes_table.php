@@ -12,13 +12,12 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('dettes', function (Blueprint $table) {
-           $table->id();
+            $table->id();
             $table->foreignId('depense_id')->constrained('depenses')->onDelete('cascade');
-            $table->foreignId('colocation_user_id')->constrained('colocation_users')->onDelete('cascade');
-            
-            $table->float('montant_a_payer');
+            $table->foreignId('colocation_user_id')->constrained('colocation_user')->onDelete('cascade');
+            $table->float('montant');
             $table->dateTime('date_paiement')->nullable();
-            $table->boolean('statut_dette')->default(false); 
+            $table->boolean('statut')->default(false);
             $table->timestamps();
         });
     }

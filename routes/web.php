@@ -4,6 +4,7 @@ use App\Http\Controllers\CategorieController;
 use App\Http\Controllers\ColocationController;
 use App\Http\Controllers\DashboradController;
 use App\Http\Controllers\DepenseController;
+use App\Http\Controllers\DetteController;
 use App\Http\Controllers\InvetationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -19,7 +20,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    // --- Colocations Routes (Manual) ---
     Route::get('/colocations', [ColocationController::class, 'index'])->name('colocations.index');
     Route::post('/colocations', [ColocationController::class, 'store'])->name('colocations.store');
     Route::get('/colocations/{colocation}', [ColocationController::class, 'show'])->name('colocations.show');
@@ -29,6 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/expenses', [DepenseController::class, 'index'])->name('expenses.index');
     Route::post('/expenses', [DepenseController::class, 'store'])->name('expenses.store');
     Route::delete('/expenses/{expense}', [DepenseController::class, 'destroy'])->name('expenses.destroy');
+    Route::put('dettes', [DetteController::class, 'update'])->name('dettes.update');
 
     Route::post('/categories', [CategorieController::class, 'store'])->name('categories.store');
 

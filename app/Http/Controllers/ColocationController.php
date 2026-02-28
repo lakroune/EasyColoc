@@ -6,6 +6,7 @@ use App\Models\Colocation;
 use App\Http\Requests\StoreColocationRequest;
 use App\Http\Requests\UpdateColocationRequest;
 use App\Models\ColocationUser;
+use App\Models\Dette;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -67,8 +68,18 @@ class ColocationController extends Controller
             $depensesmembre = $membre->depenses()->with(['categorie'])->latest()->get();
             $depenses = $depenses->merge($depensesmembre);
         }
+
+        $membresIds = [];
+        foreach ($membres as $membre) {
+            $membresIds[] = $membre->id;
+        }
+
+        $dettes = Dette::whereIn('colocation_user_id', $membresIds)
+            ->with(['colocationUser.user', 'depense.colocationUser.user'])
+            ->latest()
+            ->get();
         $depenses = $depenses->sortByDesc('created_at');
-        return   view('colocation.show', compact('colocation', 'membres', 'categories', 'depenses'));
+        return   view('colocation.show', compact('colocation', 'membres', 'categories', 'depenses', 'dettes'));
     }
     /**
      * Show the form for editing the specified resource.
