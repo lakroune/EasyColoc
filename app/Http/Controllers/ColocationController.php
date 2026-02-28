@@ -64,9 +64,11 @@ class ColocationController extends Controller
         if ($colocation->colocationUsers()->where('user_id', auth()->user()->id)->where('is_leave', false)->doesntExist())
             return redirect()->route('dashboard')->with('error', 'vous n\'etes pas membre de cette colocation');
         $membres = $colocation->colocationUsers()->where('is_leave', false)->with('user')->get();
+        $all_membres = $colocation->colocationUsers()->with('user')->get();
         $categories = $colocation->categories()->get();
         $depenses = collect();
-        foreach ($membres as $membre) {
+
+        foreach ($all_membres as $membre) {
             $depensesmembre = $membre->depenses()->with(['categorie'])->latest()->get();
             $depenses = $depenses->merge($depensesmembre);
         }
