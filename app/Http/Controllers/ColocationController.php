@@ -225,5 +225,23 @@ class ColocationController extends Controller
      * 
      */
 
-  
+    public function changeOwner(Colocation $colocation, ColocationUser $newOwner)
+    {
+        // return  $newOwner;
+        $ownerColocUser = $colocation->colocationUsers()->where('is_owner', true)->first();
+
+        if (!$ownerColocUser || auth()->id() !== $ownerColocUser->user_id) {
+            abort(403, 'Seul l\'owner peut expulser un membre.');
+        }
+
+        DB::transaction(function () use ($colocation, $newOwner) {
+            ColocationUser::where('colocation_id', $colocation->id)
+                ->update(['is_owner' => false]);
+
+            ColocationUser::where('id', $newOwner->id)
+                ->update(['is_owner' => true]);
+        });
+
+        return back()->with('success', 'Le rôle d\'owner a été transféré.');
+    }
 }
