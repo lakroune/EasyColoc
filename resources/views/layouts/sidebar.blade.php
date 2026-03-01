@@ -1,10 +1,9 @@
 <aside id="sidebar" class="sidebar fixed lg:static inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-100  lg:shadow-none overflow-y-auto flex flex-col">
     
     <div class="p-6 border-b border-gray-50 flex items-center gap-3">
-        <div class="w-9 h-9 bg-gradient-to-br from-teal-700 to-teal-900 flex items-center justify-center ">
-            <i class="fas fa-home text-white text-sm"></i>
+         <div class="flex   gap-2">
+            <img src="{{ asset('logo/logo.png') }}" alt="Logo EsyColoc" class="w-[80%] ">
         </div>
-        <span class="font-bold text-teal-950 tracking-tight text-lg">EasyColoc</span>
     </div>
     <nav class="p-4 space-y-1 flex-1">
         <x-sidebar-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
