@@ -14,7 +14,7 @@ EsyColoc est une application web développée avec le framework **Laravel (PHP)*
 - **Views** : Interfaces utilisateur construites avec **Blade** et stylisées avec **Tailwind CSS**.
 - **Middleware** : Assurent la sécurité et la gestion des accès (Admin, Membre).
 
-## 2. 📊 Modélisation de la Base de Données (ERD)
+## 2.  Modélisation de la Base de Données (ERD)
 
 La base de données relationnelle (MySQL) est structurée comme suit :
 
