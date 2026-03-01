@@ -1,34 +1,11 @@
 <x-app-layout>
-
-
     <div class="h-[calc(100vh-80px)] p-6">
         <div class="max-w-7xl mx-auto h-full flex flex-col">
-
-            {{-- Alerts --}}
-            @if (session('success'))
-                <div
-                    class="mb-4 p-3 bg-emerald-50 border border-emerald-200 text-emerald-700 rounded-lg text-[11px] flex items-center gap-2">
-                    <i class="fas fa-check-circle"></i>
-                    {{ session('success') }}
-                </div>
-            @endif
-            @if (session('error'))
-                <div
-                    class="mb-4 p-3 bg-red-50 border border-red-200 text-red-700 rounded-lg text-[11px] flex items-center gap-2">
-                    <i class="fas fa-exclamation-circle"></i>
-                    {{ session('error') }}
-                </div>
-            @endif
-
-            {{-- Table Container --}}
             <div class="flex-1 bg-white border border-gray-100 rounded-xl overflow-hidden flex flex-col">
-
-                {{-- Table Header --}}
                 <div class="p-4 border-b border-gray-100 bg-gray-50/50">
                     <h2 class="font-semibold text-gray-800 text-xs uppercase tracking-wider">Liste des utilisateurs</h2>
                 </div>
 
-                {{-- Table --}}
                 <div class="flex-1 overflow-y-auto">
                     <table class="w-full text-left">
                         <thead class="bg-gray-50 sticky top-0">
@@ -44,10 +21,10 @@
                         <tbody class="divide-y divide-gray-100">
                             @foreach ($users as $user)
                                 <tr
-                                    class="hover:bg-gray-50/50 transition {{ !$user->is_active ? 'opacity-50 bg-gray-50' : '' }}">
+                                    class="hover:bg-gray-50/50 transition {{ !$user->is_banned ? '' : 'opacity-50 bg-gray-50' }}">
                                     <td class="px-4 py-3">
                                         <div class="flex items-center gap-3">
-                                            <img src="https://ui-avatars.com/api/?name={{ urlencode($user->nom . ' ' . $user->prenom) }}&background={{ $user->is_active ? '0f4c4c' : '9ca3af' }}&color=fff&size=36"
+                                            <img src="https://ui-avatars.com/api/?name={{ urlencode($user->nom . ' ' . $user->prenom) }}&background={{ $user->is_banned ? '9ca3af' : '0f4c4c' }}&color=fff&size=36"
                                                 class="w-9 h-9 rounded-full">
                                             <div>
                                                 <p class="text-xs font-medium text-gray-800">{{ $user->nom }}
@@ -80,7 +57,7 @@
                                         </span>
                                     </td>
                                     <td class="px-4 py-3">
-                                        @if ($user->is_active)
+                                        @if ($user->is_banned === false)
                                             <span
                                                 class="px-2 py-0.5 bg-emerald-100 text-emerald-700 rounded-full text-[10px] font-medium">
                                                 Actif
@@ -95,10 +72,10 @@
                                     <td class="px-4 py-3 text-center">
                                         <form action="{{ route('admin.users.toggle-status', $user->id) }}"
                                             method="POST"
-                                            onsubmit="return confirm('{{ $user->is_active ? 'Bannir' : 'Débannir' }} cet utilisateur ?');">
+                                            onsubmit="return confirm('{{ $user->is_banned ? 'Débannir' : 'Bannir' }} cet utilisateur ?');">
                                             @csrf
                                             @method('PATCH')
-                                            @if ($user->is_active)
+                                            @if ($user->is_banned === false)
                                                 <button type="submit"
                                                     class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-600 border border-red-100 rounded-lg hover:bg-red-100 transition text-[10px] font-medium">
                                                     <i class="fas fa-user-slash text-[10px]"></i>
@@ -119,7 +96,6 @@
                     </table>
                 </div>
 
-                {{-- Pagination --}}
                 <div class="p-4 border-t border-gray-100 bg-gray-50/30">
                     {{ $users->links() }}
                 </div>
