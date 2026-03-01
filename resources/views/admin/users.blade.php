@@ -70,25 +70,31 @@
                                         @endif
                                     </td>
                                     <td class="px-4 py-3 text-center">
-                                        <form action="{{ route('admin.users.toggle-status', $user->id) }}"
-                                            method="POST"
-                                            onsubmit="return confirm('{{ $user->is_banned ? 'Débannir' : 'Bannir' }} cet utilisateur ?');">
-                                            @csrf
-                                            @method('PATCH')
-                                            @if ($user->is_banned === false)
-                                                <button type="submit"
-                                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-600 border border-red-100 rounded-lg hover:bg-red-100 transition text-[10px] font-medium">
-                                                    <i class="fas fa-user-slash text-[10px]"></i>
-                                                    Bannir
-                                                </button>
-                                            @else
-                                                <button type="submit"
-                                                    class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-lg hover:bg-emerald-100 transition text-[10px] font-medium">
-                                                    <i class="fas fa-user-check text-[10px]"></i>
-                                                    Débannir
-                                                </button>
-                                            @endif
-                                        </form>
+                                        @if (!$user->isAdmin())
+                                            <form action="{{ route('admin.users.toggle-status', $user->id) }}"
+                                                method="POST"
+                                                onsubmit="return confirm('{{ $user->is_banned ? 'Débannir' : 'Bannir' }} cet utilisateur ?');">
+                                                @csrf
+                                                @method('PATCH')
+                                                @if ($user->is_banned === false)
+                                                    <button type="submit"
+                                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-600 border border-red-100 rounded-lg hover:bg-red-100 transition text-[10px] font-medium">
+                                                        <i class="fas fa-user-slash text-[10px]"></i>
+                                                        Bannir
+                                                    </button>
+                                                @else
+                                                    <button type="submit"
+                                                        class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-lg hover:bg-emerald-100 transition text-[10px] font-medium">
+                                                        <i class="fas fa-user-check text-[10px]"></i>
+                                                        Débannir
+                                                    </button>
+                                                @endif
+                                            </form>
+                                        @else
+                                            <div
+                                                class="  inline-flex items-center gap-1.5 px-3 py-1.5 bg-emerald-50 text-emerald-600 border border-emerald-100 rounded-lg hover:bg-emerald-100 transition text-[10px] font-medium">
+                                                admin</div>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

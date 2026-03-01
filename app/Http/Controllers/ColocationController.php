@@ -132,7 +132,7 @@ class ColocationController extends Controller
     public function destroy(Colocation $colocation)
     {
         if ($colocation->owner_id !== auth()->id()) {
-            abort(403);
+            abort(403, 'Seul l\'owner peut annuler la colocation.');
         }
         $colocation->update(['status' => false]);
         foreach ($colocation->colocationUsers as $membre) {

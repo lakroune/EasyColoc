@@ -71,12 +71,18 @@ class DashboradController extends Controller
      */
     public function toggleStatus(User $user)
     {
-        if (auth()->id() === $user->id || $user->isBanned() || $user->isAdmin()) {
+        // return $user;
+        if (auth()->id() === $user->id || $user->isAdmin()) {
             return back()->with('error', 'Vous ne pouvez pas vous bannir vous-même.');
         }
+
         if (!auth()->user()->isAdmin())
             return  back()->with('error', 'Vous ne pouvez pas bannir un administrateur.');
         $user->is_banned = !$user->is_banned;
+        if ($user->is_banned) {
+            $user->colocationUsers()->update(['is_leave' => true]);
+            // 
+        }
         $user->save();
 
         $message = $user->isBanned() ? 'activé' : 'banni';

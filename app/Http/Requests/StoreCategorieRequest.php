@@ -22,7 +22,7 @@ class StoreCategorieRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'nom_categorie' => 'required|string|max:255|unique:categories,nom_categorie',
+            'nom_categorie' => 'required|string|max:255 ',
             'colocation_id' => 'required|exists:colocations,id',
         ];
     }
@@ -32,8 +32,6 @@ class StoreCategorieRequest extends FormRequest
             'nom_categorie.required' => 'Le nom de la catégorie est requis.',
             'nom_categorie.unique' => 'Le nom de la catégorie doit être unique.',
             'colocation_id.required' => 'Veuillez fournir l\'ID de la colocation.',
-            'colocation_id.exists' => 'La colocation spécifiée n\'existe pas.',
-            
         ];
     }
 }
