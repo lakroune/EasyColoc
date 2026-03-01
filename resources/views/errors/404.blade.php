@@ -10,23 +10,34 @@
             text-align: center;
             padding: 50px;
             font-family: sans-serif;
+            background-color: #f9fafb;
+            color: #1f2937;
         }
 
         h1 {
             font-size: 50px;
+            margin-bottom: 10px;
         }
 
         .logo {
-            max-width: 300px;
-            margin-bottom: 80px;
+            max-width: 400px;
+            margin-bottom: 70px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #4b5563;
+            margin-bottom: 30px;
         }
     </style>
 </head>
 
 <body>
     <img src="{{ asset('logo/logo.png') }}" alt="Logo EsyColoc" class="logo">
+
     <h1>Oups ! 404</h1>
     <p>La page que vous cherchez n'existe pas ou a été déplacée.</p>
+
     <a href="{{ url('/') }}">Retour à l'accueil</a>
 </body>
 
