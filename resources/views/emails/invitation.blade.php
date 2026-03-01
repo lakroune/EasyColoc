@@ -6,17 +6,16 @@
 </head>
 
 <body>
-    <h2>Salam </h2>
+    <h2> bonjour </h2>
     <p>
-        Ttsiftat lik invitation bach tjoin <b>EasyColoc</b>.
+        Vous avez recu une invitation de <b>EasyColoc </b>
     </p>
-    <P> colocation : {{ $colocation->nom_coloc }} </P>
-    <a href="http://127.0.0.1:8000/invitations/{{ $invetation->token }}" style="">
-        clicker ici pour accepter
+    <P> pour rejoiner la colocation : {{ $colocation->nom_coloc }} </P>
+    <a href="http://127.0.0.1:8000/invitations/{{ $invetation->token }}" style="color: #0f4c4c">
+        {{ $invetation->token }}
     </a>
     <p>
-        Merci
+        merci
     </p>
 </body>
-
 </html>

@@ -64,7 +64,6 @@
             </main>
         </div>
     </div>
-    {{-- Toast Container --}}
     <div id="toast-container" class="fixed top-4 right-4 z-[100] flex flex-col gap-2 w-72">
 
         @if (session('success'))
@@ -158,7 +157,6 @@
             setTimeout(() => toast.remove(), 200);
         }
 
-        // Auto-remove after 4 seconds
         document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.toast-item').forEach(toast => {
                 setTimeout(() => {
