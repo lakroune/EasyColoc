@@ -31,8 +31,8 @@ EsyColoc est une application web conçue pour faciliter la gestion de la colocat
 
 1.  **Cloner le dépôt**
     ```bash
-    git clone [https://github.com/lakroune/esycoloc.git](https://github.com/lakroune/esycoloc.git)
-    cd esycoloc
+    git clone https://github.com/lakroune/EasyColoc.git
+    cd EasyColoc
     ```
 
 2.  **Installer les dépendances PHP**
